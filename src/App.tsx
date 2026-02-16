@@ -7,25 +7,30 @@ import ProfileView from "./views/ProfileView";
 import LoginView from "./views/LoginView";
 import DashboardView from "./views/DashboardView";
 import EditProfileView from "./views/EditProfile";
-import { MOCK_MEMBERS } from "./data/mockData";
-import { User } from "./types";
+import { User, Member } from "./types";
 import AboutView from "./views/AboutView";
+import { useMembers } from "./hooks/useMembers";
+
 
 const App = () => {
   const [view, setView] = useState("home");
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [user, setUser] = useState<User | null>(null);
+
+  const {members, loading} = useMembers();
 
   const handleLogout = () => {
     setUser(null);
     setView("home");
   };
 
+
   const renderContent = () => {
     switch (view) {
       case "home":
         return (
           <HomeView
+            members={members}
             onExplore={() => setView("directory")}
             onSelectMember={(member) => {
               setSelectedMember(member);
@@ -36,9 +41,16 @@ const App = () => {
         );
 
       case "directory":
+        if (loading) {
+          return (
+            <div className="py-40 text-center">
+              <p className="text-gray-400 font-bold">Loading members of SNA Lagos Chapter</p>
+            </div>
+          )
+        }
         return (
           <DirectoryView
-            members={MOCK_MEMBERS}
+            members={members}
             onSelectMember={(m) => {
               setSelectedMember(m);
               setView("profile");

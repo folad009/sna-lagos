@@ -1,7 +1,6 @@
 import { Hero } from "../components/ui/Hero";
 import { ArtMarquee } from "../components/ui/ArtMarquee";
 import { SectionHeading } from "../components/ui/SectionHeading";
-import { MOCK_MEMBERS } from "../data/mockData";
 import { MemberCard } from "../components/ui/MemberCard";
 import { UpcomingEvents } from "../components/ui/UpcomingEvent";
 import { JoinJourney } from "../components/ui/JoinJourney";
@@ -11,11 +10,12 @@ import { ChevronRight } from "lucide-react";
 import { Member } from "../types";
 
 interface HomeViewProps {
+  members: Member[];
   onExplore: () => void;
   onSelectMember: (member: Member) => void;
 }
 
-const HomeView = ({ onExplore, onSelectMember }: HomeViewProps) => {
+const HomeView = ({ members, onExplore, onSelectMember }: HomeViewProps) => {
   return (
     <div className="animate-in fade-in duration-700">
       <Hero onExplore={onExplore} />
@@ -37,15 +37,22 @@ const HomeView = ({ onExplore, onSelectMember }: HomeViewProps) => {
           </button>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
-          {MOCK_MEMBERS.filter((m) => m.featured)
-            .slice(0, 3)
-            .map((member) => (
-              <MemberCard
-                key={member.id}
-                member={member}
-                onClick={() => onSelectMember(member)}
-              />
-            ))}
+          {members.length === 0 ? (
+            <p className="col-span-full text-center text-gray-400 font-bold">
+              Loading featured artists...
+            </p>
+          ) : (
+            members
+              .filter((m) => m.featured)
+              .slice(0, 3)
+              .map((member) => (
+                <MemberCard
+                  key={member.id ?? member.name}
+                  member={member}
+                  onClick={() => onSelectMember(member)}
+                />
+              ))
+          )}
         </div>
       </section>
 

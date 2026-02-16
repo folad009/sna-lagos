@@ -30,7 +30,7 @@ const ProfileView = ({
 
  useMetaTags(
   `${member.name} | ${member.category} Artist | SNA Lagos`,
-  `${member.name} is a professional ${member.category} artist based in ${member.location}. Member since ${member.joinedDate}. ${member.bio.substring(0, 100)}...`,
+  `${member.name} is a professional ${member.category} artist based in ${member.location}. Member since ${member.joinedDate}. ${(member.bio || "").substring(0, 100)}...`,
   member.avatar
 );
 
@@ -160,14 +160,9 @@ const ProfileView = ({
                 {member.name}
               </h1>
               <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
-                {member.bio}
+                
                 <p className="mt-4">
-                  In addition to his studio practice,{" "}
-                  {member.name.split(" ")[0]} is an active member of the Lagos
-                  art community, mentoring young artists and participating in
-                  local community mural projects. His philosophy centers on the
-                  idea that art should be accessible and reflective of the lived
-                  reality of Nigerians.
+                 {member.bio}
                 </p>
               </div>
             </div>
@@ -186,9 +181,9 @@ const ProfileView = ({
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-6 mb-20 animate-in fade-in duration-500">
-              {filteredPortfolio.map((item, i) => (
+              {filteredPortfolio.map((item) => (
                 <div
-                  key={i}
+                  key={item.url}
                   onClick={() => setSelectedWork(item)}
                   className="group relative rounded-2xl overflow-hidden cursor-zoom-in aspect-square shadow-lg"
                 >
