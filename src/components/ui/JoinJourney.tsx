@@ -29,7 +29,7 @@ export const JoinJourney = () => {
             },
           ].map((item, i) => (
             <div key={i} className="text-center relative">
-              <div className="w-24 h-24 bg-white border-4 border-emerald-800 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl text-3xl font-bold text-emerald-800 font-serif">
+              <div className="w-24 h-24 bg-white border-4 border-[#bb6e31] rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl text-3xl font-bold text-[#bb6e31] font-serif">
                 {item.step}
               </div>
               <h4 className="text-2xl font-bold mb-4 font-serif">

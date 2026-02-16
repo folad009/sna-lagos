@@ -2,18 +2,10 @@ import { MapPin, Mail, Globe, Instagram, Twitter } from "lucide-react";
 
 const Footer = ({ setView }: any) => {
   return (
-    <footer className="bg-gray-900 text-white py-24">
+    <footer className="bg-black text-white py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-16">
           <div className="col-span-2">
-            <div className="flex items-center space-x-2 mb-8">
-              <div className="w-10 h-10 art-gradient rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                S
-              </div>
-              <span className="text-2xl font-bold tracking-tight font-serif uppercase">
-                SNA LAGOS
-              </span>
-            </div>
             <p className="text-gray-400 max-w-sm text-lg leading-relaxed mb-10">
               Empowering Nigerian artists through professional connection, legal
               advocacy, and global exhibitions since 1963.
@@ -23,7 +15,7 @@ const Footer = ({ setView }: any) => {
                 href="https://instagram.com/snalagos"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-500 hover:text-white transition-all transform hover:-translate-y-1"
+                className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
               >
                 <Instagram size={24} />
               </a>
@@ -31,7 +23,7 @@ const Footer = ({ setView }: any) => {
                 href="https://twitter.com/snalagos"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-500 hover:text-white transition-all transform hover:-translate-y-1"
+                className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
               >
                 <Twitter size={24} />
               </a>
@@ -39,7 +31,7 @@ const Footer = ({ setView }: any) => {
                 href="https://snalagos.ng"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-500 hover:text-white transition-all transform hover:-translate-y-1"
+                className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
               >
                 <Globe size={24} />
               </a>
@@ -85,15 +77,15 @@ const Footer = ({ setView }: any) => {
             <h4 className="font-bold mb-8 font-serif text-lg">Contact Us</h4>
             <ul className="space-y-6 text-gray-400 font-medium">
               <li className="flex items-start">
-                <MapPin size={20} className="mr-3 text-emerald-700 shrink-0" />
+                <MapPin size={20} className="mr-3 text-[#ffc293] shrink-0" />
                 <span>National Theatre Complex, Iganmu, Lagos State.</span>
               </li>
               <li className="flex items-center">
-                <Mail size={20} className="mr-3 text-emerald-700 shrink-0" />
+                <Mail size={20} className="mr-3 text-[#ffc293] shrink-0" />
                 <span>info@snalagos.ng</span>
               </li>
               <li className="flex items-center">
-                <Globe size={20} className="mr-3 text-emerald-700 shrink-0" />
+                <Globe size={20} className="mr-3 text-[#ffc293] shrink-0" />
                 <span>www.snalagos.ng</span>
               </li>
             </ul>

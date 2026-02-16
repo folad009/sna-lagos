@@ -8,13 +8,13 @@ export const Hero = ({ onExplore }: any) => {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-800 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-emerald-100">
+          <div className="inline-flex items-center space-x-2 bg-[#bb6e31]/10 text-[#bb6e31] px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-[#bb6e31]/20">
             <Award size={14} />
             <span>Established 1963</span>
           </div>
           <h1 className="text-6xl md:text-8xl font-bold leading-tight mb-8 font-serif">
             Where Nigerian{" "}
-            <span className="italic text-emerald-800">Mastery</span> Meets
+            <span className="italic text-[#bb6e31]">Mastery</span> Meets
             Tomorrow.
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-2xl">
@@ -24,11 +24,11 @@ export const Hero = ({ onExplore }: any) => {
           <div className="flex flex-wrap gap-6 mb-20">
             <button
               onClick={onExplore}
-              className="bg-emerald-800 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-900 shadow-2xl transition transform hover:-translate-y-1 active:scale-95"
+              className="bg-[#bb6e31] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#8c3e02] shadow-2xl transition transform hover:-translate-y-1 active:scale-95"
             >
               Explore Directory
             </button>
-            <button className="border-2 border-emerald-800 text-emerald-800 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-50 transition transform hover:-translate-y-1 active:scale-95">
+            <button className="border-2 border-[#bb6e31] text-[#bb6e31] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#bb6e31]/10 transition transform hover:-translate-y-1 active:scale-95">
               Membership Portal
             </button>
           </div>

@@ -30,7 +30,7 @@ const HomeView = ({ members, onExplore, onSelectMember }: HomeViewProps) => {
           />
           <button
             onClick={onExplore}
-            className="hidden md:flex items-center text-emerald-800 font-bold mb-12 hover:translate-x-1 transition group"
+            className="hidden md:flex items-center text-[#bb6e31] font-bold mb-12 hover:translate-x-1 transition group"
           >
             View Full Directory{" "}
             <ChevronRight className="ml-1 group-hover:translate-x-1" />
@@ -65,7 +65,7 @@ const HomeView = ({ members, onExplore, onSelectMember }: HomeViewProps) => {
       <PartnerBar />
 
       {/* Newsletter Subscription */}
-      <section className="py-24 bg-emerald-950 text-white relative overflow-hidden">
+      <section className="py-24 bg-[#bb6e31] text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] opacity-10"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h3 className="text-4xl md:text-5xl font-bold mb-6 font-serif">

@@ -22,35 +22,25 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
               setIsMobileMenuOpen(false);
             }}
           >
-            <div className="w-10 h-10 art-gradient rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              S
-            </div>
-            <div>
-              <span className="text-xl font-bold tracking-tight uppercase">
-                SNA <span className="text-emerald-800">LAGOS</span>
-              </span>
-              <p className="text-[10px] uppercase tracking-widest text-gray-500 font-semibold -mt-1">
-                Society of Nigerian Artists
-              </p>
-            </div>
+            <img src="/assets/img/sna_Logo.webp" alt="SNA Lagos Logo" className="h-20 w-auto" />
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => setView("home")}
-              className={`text-sm font-medium hover:text-emerald-700 transition ${activeView === "home" ? "text-emerald-700 underline underline-offset-8" : "text-gray-600"}`}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "home" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
             >
               Home
             </button>
             <button
               onClick={() => setView("directory")}
-              className={`text-sm font-medium hover:text-emerald-700 transition ${activeView === "directory" ? "text-emerald-700 underline underline-offset-8" : "text-gray-600"}`}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "directory" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
             >
               Directory
             </button>
             <button
               onClick={() => setView("about")}
-              className={`text-sm font-medium hover:text-emerald-700 transition ${activeView === "about" ? "text-emerald-700 underline underline-offset-8" : "text-gray-600"}`}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "about" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
             >
               Mission
             </button>
@@ -74,7 +64,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             ) : (
               <button
                 onClick={() => setView("login")}
-                className="bg-emerald-800 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-emerald-900 transition flex items-center space-x-2 shadow-md"
+                className="bg-[#bb6e31] text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#8c3e02] transition flex items-center space-x-2 shadow-md"
               >
                 <LogIn size={16} />
                 <span>Member Portal</span>
@@ -101,7 +91,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
               setView("home");
               setIsMobileMenuOpen(false);
             }}
-            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "home" ? "text-emerald-800" : "text-gray-700"}`}
+            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "home" ? "text-[#bb6e31]" : "text-gray-700"}`}
           >
             Home
           </button>
@@ -110,7 +100,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
               setView("directory");
               setIsMobileMenuOpen(false);
             }}
-            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "directory" ? "text-emerald-800" : "text-gray-700"}`}
+            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "directory" ? "text-[#bb6e31]" : "text-gray-700"}`}
           >
             Directory
           </button>
