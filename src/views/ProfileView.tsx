@@ -4,13 +4,13 @@ import {
   ChevronRight,
   Mail,
   MapPin,
-  BookOpen,
   Instagram,
   Twitter,
   Globe,
   Share2,
   X,
   Eye,
+  PhoneIcon,
 } from "lucide-react";
 import { ShareModal } from "../components/modals/ShareModal";
 import { ContactModal } from "../components/modals/ContactModal";
@@ -30,7 +30,7 @@ const ProfileView = ({
 
  useMetaTags(
   `${member.name} | ${member.category} Artist | SNA Lagos`,
-  `${member.name} is a professional ${member.category} artist based in ${member.location}. Member since ${member.joinedDate}. ${(member.bio || "").substring(0, 100)}...`,
+  `${member.name} is a professional ${member.category} artist based in ${member.location}. ${(member.bio || "").substring(0, 100)}...`,
   member.avatar
 );
 
@@ -97,8 +97,8 @@ const ProfileView = ({
                   <span>{member.location}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-gray-600">
-                  <BookOpen size={18} />
-                  <span>Member since {member.joinedDate}</span>
+                  <PhoneIcon size={18} />
+                  <span>Phone Number {member.phoneNumber}</span>
                 </div>
                 <div className="pt-6 flex flex-col space-y-4 border-t border-gray-100">
                   <div className="flex items-center space-x-6">
