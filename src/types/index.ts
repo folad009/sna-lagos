@@ -15,7 +15,7 @@ export interface Member {
   location: string;
   avatar: string;
   portfolio: PortfolioItem[];
-  joinedDate: string;
+  phoneNumber: number;
   featured?: boolean;
   socials?: {
     instagram?: string;

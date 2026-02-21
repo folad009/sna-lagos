@@ -37,7 +37,7 @@ const mapArtistToMember = async (item: any): Promise<Member> => {
     location: fields.location || "",
     category: fields.category || "General",
     email: fields.email || "",
-    joinedDate: fields.joinedDate || "",
+    phoneNumber: fields.phoneNumber || "",
     portfolio,
     featured: fields.feature || false, // match API
     socials: fields.socials || {},
