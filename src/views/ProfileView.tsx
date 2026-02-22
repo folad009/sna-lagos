@@ -98,7 +98,7 @@ const ProfileView = ({
                 </div>
                 <div className="flex items-center space-x-2 text-gray-600">
                   <PhoneIcon size={18} />
-                  <span>Phone Number {member.phoneNumber}</span>
+                  <span>{member.phoneNumber}</span>
                 </div>
                 <div className="pt-6 flex flex-col space-y-4 border-t border-gray-100">
                   <div className="flex items-center space-x-6">
