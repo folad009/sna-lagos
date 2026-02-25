@@ -22,7 +22,11 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
               setIsMobileMenuOpen(false);
             }}
           >
-            <img src="/assets/img/sna_Logo.webp" alt="SNA Lagos Logo" className="h-20 w-auto" />
+            <img
+              src="/assets/img/sna_Logo.webp"
+              alt="SNA Lagos Logo"
+              className="h-20 w-auto"
+            />
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
@@ -32,18 +36,20 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             >
               Home
             </button>
+
+            <button
+              onClick={() => setView("about")}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "about" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
+            >
+              About SNA
+            </button>
             <button
               onClick={() => setView("directory")}
               className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "directory" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
             >
               Directory
             </button>
-            <button
-              onClick={() => setView("about")}
-              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "about" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
-            >
-              Mission
-            </button>
+
             {user ? (
               <div className="flex items-center space-x-4">
                 <button
@@ -95,6 +101,17 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
           >
             Home
           </button>
+
+          <button
+            onClick={() => {
+              setView("about");
+              setIsMobileMenuOpen(false);
+            }}
+            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "about" ? "text-emerald-800" : "text-gray-700"}`}
+          >
+            About SNA
+          </button>
+
           <button
             onClick={() => {
               setView("directory");
@@ -104,15 +121,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
           >
             Directory
           </button>
-          <button
-            onClick={() => {
-              setView("about");
-              setIsMobileMenuOpen(false);
-            }}
-            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "about" ? "text-emerald-800" : "text-gray-700"}`}
-          >
-            Mission
-          </button>
+
           <div className="pt-6 border-t border-gray-50">
             {user ? (
               <button

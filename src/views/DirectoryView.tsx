@@ -5,6 +5,8 @@ import { Search, Palette, X } from "lucide-react";
 import { CategoryMultiFilter } from "../components/ui/CategoryMultiFilter";
 import { MemberCard } from "../components/ui/MemberCard";
 
+const ITEMS_PER_PAGE = 9;
+
 const DirectoryView = ({
   members,
   onSelectMember,
@@ -16,6 +18,8 @@ const DirectoryView = ({
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const suggestionRef = useRef<HTMLDivElement>(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,6 +33,10 @@ const DirectoryView = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedCategories]);
 
   const toggleCategory = (cat: Category) => {
     setSelectedCategories((prev) =>
@@ -57,14 +65,20 @@ const DirectoryView = ({
       .slice(0, 5);
   }, [search, members]);
 
-  useEffect(() => {
-  members.forEach(m => {
-    if (!m.name) {
-      console.warn("Member missing name:", m);
-    }
-  });
-}, [members]);
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
 
+  const paginatedMembers = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filtered.slice(start, start + ITEMS_PER_PAGE);
+  }, [currentPage, filtered]);
+
+  useEffect(() => {
+    members.forEach((m) => {
+      if (!m.name) {
+        console.warn("Member missing name:", m);
+      }
+    });
+  }, [members]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
@@ -152,13 +166,51 @@ const DirectoryView = ({
 
       {filtered.length > 0 ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {filtered.map((member) => (
+          {paginatedMembers.map((member) => (
             <MemberCard
               key={member.id}
               member={member}
               onClick={() => onSelectMember(member)}
             />
           ))}
+          <div>
+            {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-16">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="px-4 py-2 border rounded disabled:opacity-40"
+              >
+                Prev
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 rounded border font-bold ${
+                      currentPage === page
+                        ? "bg-emerald-800 text-white"
+                        : "bg-white"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ),
+              )}
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="px-4 py-2 border rounded disabled:opacity-40"
+              >
+                Next
+              </button>
+            </div>
+          )}
+          </div>
+          
         </div>
       ) : (
         <div className="text-center py-32 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">

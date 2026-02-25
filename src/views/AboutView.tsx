@@ -1,9 +1,45 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+
 import { SectionHeading } from "../components/ui/SectionHeading";
-import { MOCK_MEMBERS, LEADERSHIP_TEAM } from "../data/mockData";
 import { Users, ShieldCheck, Sparkles, Heart, Award, Eye, History } from "lucide-react";
+import { getLeadership, getArtists } from "../api/wordpress";
+
+
 
 const AboutView = () => {
+const [leaders, setLeaders] = useState([]);
+const [loadingLeaders, setLoadingLeaders] = useState(true);
+const [membersPreview, setMembersPreview] = useState<any[]>([]);
+
+const [leadersError, setLeadersError] = useState(false);
+const fetchedRef = useRef(false);
+
+useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+
+    const loadData = async () => {
+      try {
+        const [leadersData, membersData] = await Promise.all([
+          getLeadership(),
+          getArtists(),
+        ]);
+
+        setLeaders(leadersData || []);
+
+        // Only show first 6 avatars for preview
+        setMembersPreview((membersData || []).slice(0, 6));
+      } catch (e) {
+        console.error("About data fetch failed", e);
+        setLeadersError(true);
+      } finally {
+        setLoadingLeaders(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
   return (
     <div className="pt-32 pb-20 overflow-hidden">
       {/* Mission Hero */}
@@ -22,14 +58,18 @@ const AboutView = () => {
             </p>
             <div className="flex space-x-4">
               <div className="flex -space-x-3">
-                {MOCK_MEMBERS.map((m) => (
+                {membersPreview.map((m) => (
                   <img
                     key={m.id}
                     src={m.avatar}
                     className="w-10 h-10 rounded-full border-2 border-white object-cover"
-                    alt="Artist"
+                    alt={m.name}
                   />
                 ))}
+
+                {loadingLeaders && (
+                  <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse border-2 border-white" />
+                )}
               </div>
               <p className="text-sm font-bold text-gray-500 flex items-center">
                 <Users size={16} className="mr-2" /> 500+ Active Members in
@@ -153,31 +193,55 @@ const AboutView = () => {
           </div>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {LEADERSHIP_TEAM.map((leader, idx) => (
-            <div key={idx} className="group">
-              <div className="relative mb-8">
-                <div className="aspect-[3/4] overflow-hidden shadow-xl border border-gray-100">
-                  <img
-                    src={leader.image}
-                    alt={leader.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#bb6e31]/90 via-[#bb6e31]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
-                    <p className="text-sm text-white leading-relaxed italic">
-                      {leader.bio}
-                    </p>
-                  </div>
-                </div>
+  {loadingLeaders && (
+    <p className="text-gray-400 col-span-full text-center py-10">
+      Loading leadership...
+    </p>
+  )}
+
+  {!loadingLeaders && leadersError && (
+    <p className="text-red-500 col-span-full text-center py-10">
+      Unable to load leadership.
+    </p>
+  )}
+
+  {!loadingLeaders &&
+    !leadersError &&
+    leaders.map((leader) => (
+      <div key={leader.id} className="group">
+        <div className="relative mb-8">
+          <div className="aspect-[3/4] overflow-hidden shadow-xl border border-gray-100">
+            <img
+              src={leader.image}
+              alt={leader.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            {leader.bio && (
+              <div className="absolute inset-0 bg-gradient-to-t from-[#bb6e31]/90 via-[#bb6e31]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                <p className="text-sm text-white leading-relaxed italic">
+                  {leader.bio}
+                </p>
               </div>
-              <h4 className="text-2xl font-bold font-serif mb-1 text-gray-900">
-                {leader.name}
-              </h4>
-              <p className="text-[#bb6e31] font-bold text-xs uppercase tracking-[0.2em]">
-                {leader.role}
-              </p>
-            </div>
-          ))}
+            )}
+          </div>
         </div>
+
+        <h4 className="text-2xl font-bold font-serif mb-1 text-gray-900">
+          {leader.name}
+        </h4>
+
+        <p className="text-[#bb6e31] font-bold text-xs uppercase tracking-[0.2em]">
+          {leader.role}
+        </p>
+
+        {leader.tenure && (
+          <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">
+            {leader.tenure}
+          </p>
+        )}
+      </div>
+    ))}
+</div>
       </div>
 
       {/* Final CTA */}
