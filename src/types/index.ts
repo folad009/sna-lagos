@@ -1,9 +1,21 @@
 export type Category = 'Painting' | 'Sculpture' | 'Digital Art' | 'Mixed Media' | 'Photography' | 'Textiles';
 
 export interface PortfolioItem {
-  url: string;
+  id?: string;
+  url?: string;
+  mediaEndpoint?: string;
   title: string;
+  category: Category;
+}
+
+export interface UpcomingEvent {
+  id: string;
+  title: string;
+  date: string;
+  location: string;
   category: string;
+  image?: string;
+  registrationLink?: string;
 }
 
 export interface Member {

@@ -7,6 +7,55 @@ import { MemberCard } from "../components/ui/MemberCard";
 
 const ITEMS_PER_PAGE = 9;
 
+/**
+ * Generates a windowed pagination sequence that is compact for large datasets.
+ * Always includes page 1 and totalPages.
+ * Includes currentPage ± 2 for quick access.
+ * Inserts ellipsis markers ("...") where ranges are skipped.
+ * 
+ * @param totalPages - Total number of pages
+ * @param currentPage - Currently active page
+ * @returns Array of page numbers or "..." for ellipsis
+ */
+function getWindowedPages(totalPages: number, currentPage: number): (number | string)[] {
+  if (totalPages <= 7) {
+    // If 7 or fewer pages, show all
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  const pages: (number | string)[] = [];
+  const window = 2;
+  const start = Math.max(1, currentPage - window);
+  const end = Math.min(totalPages, currentPage + window);
+
+  // Always include page 1
+  pages.push(1);
+
+  // Add ellipsis if there's a gap after page 1
+  if (start > 2) {
+    pages.push("...");
+  }
+
+  // Add windowed pages around current
+  for (let i = start; i <= end; i++) {
+    if (i !== 1 && i !== totalPages) {
+      pages.push(i);
+    }
+  }
+
+  // Add ellipsis if there's a gap before last page
+  if (end < totalPages - 1) {
+    pages.push("...");
+  }
+
+  // Always include last page (if not already added)
+  if (totalPages !== 1) {
+    pages.push(totalPages);
+  }
+
+  return pages;
+}
+
 const DirectoryView = ({
   members,
   onSelectMember,
@@ -36,7 +85,7 @@ const DirectoryView = ({
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [search, selectedCategories]);
+  }, [search, selectedCategories, members]);
 
   const toggleCategory = (cat: Category) => {
     setSelectedCategories((prev) =>
@@ -165,53 +214,69 @@ const DirectoryView = ({
       </div>
 
       {filtered.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {paginatedMembers.map((member) => (
-            <MemberCard
-              key={member.id}
-              member={member}
-              onClick={() => onSelectMember(member)}
-            />
-          ))}
-          <div>
-            {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-16">
+        <>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {paginatedMembers.map((member) => (
+              <MemberCard
+                key={member.id}
+                member={member}
+                onClick={() => onSelectMember(member)}
+              />
+            ))}
+          </div>
+            
+          {totalPages > 1 && (
+            <nav
+              className="flex justify-center items-center gap-2 mt-16"
+              role="navigation"
+              aria-label="Pagination"
+            >
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((p) => p - 1)}
                 className="px-4 py-2 border rounded disabled:opacity-40"
+                aria-label="Go to previous page"
               >
                 Prev
               </button>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
+              {getWindowedPages(totalPages, currentPage).map((page, idx) =>
+                page === "..." ? (
+                  <span
+                    key={`ellipsis-${idx}`}
+                    className="px-2 py-2 text-gray-400"
+                    aria-hidden="true"
+                  >
+                    ...
+                  </span>
+                ) : (
                   <button
                     key={page}
-                    onClick={() => setCurrentPage(page)}
+                    onClick={() => setCurrentPage(page as number)}
                     className={`px-4 py-2 rounded border font-bold ${
                       currentPage === page
                         ? "bg-emerald-800 text-white"
                         : "bg-white"
                     }`}
+                    aria-label={`Go to page ${page}`}
+                    aria-current={currentPage === page ? "page" : undefined}
                   >
                     {page}
                   </button>
-                ),
+                )
               )}
 
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((p) => p + 1)}
                 className="px-4 py-2 border rounded disabled:opacity-40"
+                aria-label="Go to next page"
               >
                 Next
               </button>
-            </div>
+            </nav>
           )}
-          </div>
-          
-        </div>
+        </>
       ) : (
         <div className="text-center py-32 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
           <Palette className="mx-auto text-gray-200 mb-6" size={80} />

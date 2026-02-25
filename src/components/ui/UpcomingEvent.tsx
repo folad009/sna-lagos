@@ -1,40 +1,47 @@
 import { SectionHeading } from "./SectionHeading";
-import { ChevronRight, Calendar, Clock, MapPin } from "lucide-react";
+import { ChevronRight, Calendar, Clock, MapPin, RefreshCw } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { getUpcomingEvents } from "@/src/api/wordpress";
-
-type Event = {
-  id: number;
-  title: string;
-  date: string;
-  location: string;
-  category: string;
-};
+import { UpcomingEvent } from "@/src/types";
 
 export const UpcomingEvents = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<UpcomingEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   // Prevent double fetch in React Strict Mode
   const fetchedRef = useRef(false);
 
+  /**
+   * Async function to load upcoming events.
+   * Fetch data from the API and update events state.
+   * Handles loading/error states via setLoading and setError.
+   */
+  const loadEvents = async () => {
+    try {
+      setLoading(true);
+      setError(false);
+      const data = await getUpcomingEvents();
+      setEvents(data || []);
+    } catch (e) {
+      console.error("Failed to load events", e);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  /**
+   * Retry handler: resets fetchedRef to allow re-fetching and calls loadEvents.
+   */
+  const handleRetry = () => {
+    fetchedRef.current = false;
+    loadEvents();
+  };
+
   useEffect(() => {
     if (fetchedRef.current) return;
     fetchedRef.current = true;
-
-    const loadEvents = async () => {
-      try {
-        const data = await getUpcomingEvents();
-        setEvents(data || []);
-      } catch (e) {
-        console.error("Failed to load events", e);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadEvents();
   }, []);
 
@@ -61,8 +68,17 @@ export const UpcomingEvents = () => {
 
         {/* Error State */}
         {!loading && error && (
-          <div className="text-center py-16 text-red-500 font-semibold">
-            Unable to load events. Please try again later.
+          <div className="text-center py-16">
+            <p className="text-red-500 font-semibold mb-4">
+              Unable to load events. Please try again later.
+            </p>
+            <button 
+              onClick={handleRetry}
+              className="inline-flex items-center gap-2 py-2 px-4 bg-[#bb6e31] text-white font-bold rounded-lg hover:bg-[#a55f29] transition"
+            >
+              <RefreshCw size={18} />
+              Retry
+            </button>
           </div>
         )}
 
@@ -105,9 +121,26 @@ export const UpcomingEvents = () => {
                   </p>
                 </div>
 
-                <button className="w-full py-4 rounded-xl border border-[#bb6e31]/10 font-bold text-[#bb6e31] group-hover:bg-[#bb6e31] group-hover:text-white transition-all">
-                  Register Interest
-                </button>
+                {event.registrationLink ? (
+                  <a
+                    href={event.registrationLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block w-full py-4 rounded-xl border border-[#bb6e31]/10 font-bold text-[#bb6e31] group-hover:bg-[#bb6e31] group-hover:text-white transition-all text-center"
+                    aria-label={`Register interest for ${event.title}`}
+                  >
+                    Register Interest
+                  </a>
+                ) : (
+                  <button
+                    disabled
+                    className="w-full py-4 rounded-xl border border-[#bb6e31]/10 font-bold text-[#bb6e31] opacity-50 cursor-not-allowed"
+                    aria-disabled="true"
+                    title="Registration link is not available"
+                  >
+                    Register Interest
+                  </button>
+                )}
               </div>
             ))}
           </div>

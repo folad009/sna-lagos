@@ -19,22 +19,25 @@ useEffect(() => {
     fetchedRef.current = true;
 
     const loadData = async () => {
-      try {
-        const [leadersData, membersData] = await Promise.all([
-          getLeadership(),
-          getArtists(),
-        ]);
+      const [leadersResult, membersResult] = await Promise.allSettled([
+        getLeadership(),
+        getArtists(),
+      ]);
 
-        setLeaders(leadersData || []);
-
-        // Only show first 6 avatars for preview
-        setMembersPreview((membersData || []).slice(0, 6));
-      } catch (e) {
-        console.error("About data fetch failed", e);
+      if (leadersResult.status === "fulfilled") {
+        setLeaders(leadersResult.value || []);
+      } else {
+        console.error("Leadership fetch failed", leadersResult.reason);
         setLeadersError(true);
-      } finally {
-        setLoadingLeaders(false);
       }
+
+      if (membersResult.status === "fulfilled") {
+        setMembersPreview((membersResult.value || []).slice(0, 6));
+      } else {
+        console.error("Artists fetch failed", membersResult.reason);
+      }
+
+      setLoadingLeaders(false);
     };
 
     loadData();
@@ -67,9 +70,13 @@ useEffect(() => {
                   />
                 ))}
 
-                {loadingLeaders && (
-                  <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse border-2 border-white" />
-                )}
+                {loadingLeaders &&
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-10 h-10 rounded-full bg-gray-200 animate-pulse border-2 border-white"
+                    />
+                  ))}
               </div>
               <p className="text-sm font-bold text-gray-500 flex items-center">
                 <Users size={16} className="mr-2" /> 500+ Active Members in
@@ -207,6 +214,15 @@ useEffect(() => {
 
   {!loadingLeaders &&
     !leadersError &&
+    leaders.length === 0 && (
+      <p className="text-gray-400 col-span-full text-center py-10">
+        No leadership data available.
+      </p>
+    )}
+
+  {!loadingLeaders &&
+    !leadersError &&
+    leaders.length > 0 &&
     leaders.map((leader) => (
       <div key={leader.id} className="group">
         <div className="relative mb-8">
@@ -214,6 +230,11 @@ useEffect(() => {
             <img
               src={leader.image}
               alt={leader.name}
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                img.onerror = null;
+                img.src = "/placeholder-leader.png";
+              }}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
             {leader.bio && (

@@ -1,4 +1,4 @@
-import { Member, PortfolioItem } from "../types";
+import { Member, PortfolioItem, UpcomingEvent } from "../types";
 
 const BASE_URL = "https://thedesignhub.com.ng/sna-backend/wp-json";
 const WP_API = `${BASE_URL}/wp/v2`;
@@ -38,9 +38,9 @@ const mapArtistToMember = async (item: any): Promise<Member> => {
   const portfolio: PortfolioItem[] = (fields.portfolio || []).map(
     (id: string) => ({
       id,
-      // This is an API endpoint, not the image itself.
-      // Fetch it later and extract source_url when needed.
-      url: `${WP_API}/media/${id}`,
+      url: null,
+      // Explicit endpoint for fetching the full media object and extracting source_url
+      mediaEndpoint: `${WP_API}/media/${id}`,
       title: "",
       category: "Work",
     })
@@ -77,9 +77,13 @@ export const getArtists = async (): Promise<Member[]> => {
     );
 
     const data = await res.json();
+    if (!Array.isArray(data)) {
+      throw new Error(`Unexpected response on page ${page}: ${JSON.stringify(data).slice(0, 200)}`)
+    }
+
     totalPages = Number(res.headers.get("X-WP-TotalPages")) || 1;
 
-    allData = [...allData, ...data];
+    allData.push(...data);
     page++;
   } while (page <= totalPages);
 
@@ -101,13 +105,14 @@ export const getArtistById = async (id: number): Promise<Member> => {
 // --------------------------------------------------
 // Resolve Portfolio Image (lazy load helper)
 // --------------------------------------------------
-export const getMediaById = async (id: string) => {
+export const getMediaById = async (id: string): Promise<PortfolioItem> => {
   const res = await safeFetch(`${WP_API}/media/${id}`);
   const data = await res.json();
 
   return {
     id,
     url: data.source_url,
+    mediaEndpoint: `${WP_API}/media/${id}`,
     title: data.title?.rendered || "",
     category: "Work",
   };
@@ -117,9 +122,17 @@ export const getMediaById = async (id: string) => {
 // Upcoming Events
 // Uses custom endpoint: /wp-json/sna/v1/upcoming-events
 // --------------------------------------------------
-export const getUpcomingEvents = async () => {
+export const getUpcomingEvents = async (): Promise<UpcomingEvent[]> => {
   const res = await safeFetch(`${CUSTOM_REST_API}/upcoming-events`);
   const data = await res.json();
+
+  // Validate response is an array
+  if (!Array.isArray(data)) {
+    console.error(
+      `Expected array from getUpcomingEvents, got: ${typeof data}`
+    );
+    return [];
+  }
 
   return data.map((item: any) => ({
     id: item.id,
@@ -128,14 +141,12 @@ export const getUpcomingEvents = async () => {
     location: item.location || "TBA",
     category: item.category || "General",
     image: item.image || "",
-    link: item.link || "#",
+    registrationLink: item.registrationLink || item.link || "",
   }));
 };
 
 export const getLeadership = async () => {
   const res = await safeFetch(`${CUSTOM_REST_API}/leadership`);
-
-  if (!res.ok) throw new Error("Failed to fetch leadership");
 
   return res.json();
 };
