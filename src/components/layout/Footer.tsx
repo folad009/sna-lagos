@@ -57,6 +57,14 @@ const Footer = ({ setView }: any) => {
                 </button>
               </li>
               <li>
+                <button
+                  onClick={() => setView("contact")}
+                  className="hover:text-white transition-colors"
+                >
+                  Contact
+                </button>
+              </li>
+              <li>
                 <button className="hover:text-white transition-colors">
                   Membership Guide
                 </button>
@@ -78,15 +86,30 @@ const Footer = ({ setView }: any) => {
             <ul className="space-y-6 text-gray-400 font-medium">
               <li className="flex items-start">
                 <MapPin size={20} className="mr-3 text-[#ffc293] shrink-0" />
-                <span>National Theatre Complex, Iganmu, Lagos State.</span>
+                <span>
+                  Suite 2, Aina Onabolu Building, National Theatre, Iganmu,
+                  Lagos
+                </span>
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="mr-3 text-[#ffc293] shrink-0" />
-                <span>info@snalagos.ng</span>
+                <a
+                  href="mailto:societyofnigerianartists@gmail.com"
+                  className="hover:text-white transition-colors break-all"
+                >
+                  societyofnigerianartists@gmail.com
+                </a>
               </li>
               <li className="flex items-center">
                 <Globe size={20} className="mr-3 text-[#ffc293] shrink-0" />
-                <span>www.snalagos.ng</span>
+                <a
+                  href="https://www.snalagos.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  www.snalagos.com
+                </a>
               </li>
             </ul>
           </div>

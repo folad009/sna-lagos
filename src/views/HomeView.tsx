@@ -22,46 +22,10 @@ const HomeView = ({ members, onExplore, onSelectMember }: HomeViewProps) => {
 
       <ArtMarquee />
 
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-          <SectionHeading
-            title="Masters & Rising Stars"
-            subtitle="Highlighting the professional members of the Lagos Chapter who are defining the contemporary narrative."
-          />
-          <button
-            onClick={onExplore}
-            className="hidden md:flex items-center text-[#bb6e31] font-bold mb-12 hover:translate-x-1 transition group"
-          >
-            View Full Directory{" "}
-            <ChevronRight className="ml-1 group-hover:translate-x-1" />
-          </button>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
-          {members.length === 0 ? (
-            <p className="col-span-full text-center text-gray-400 font-bold">
-              Loading featured artists...
-            </p>
-          ) : (
-            members
-              .filter((m) => m.featured)
-              .slice(0, 3)
-              .map((member) => (
-                <MemberCard
-                  key={member.id ?? member.name}
-                  member={member}
-                  onClick={() => onSelectMember(member)}
-                />
-              ))
-          )}
-        </div>
-      </section>
-
       <MissionVision />
 
       <UpcomingEvents />
-
-      <JoinJourney />
-
+      
       <PartnerBar />
 
       {/* Newsletter Subscription */}

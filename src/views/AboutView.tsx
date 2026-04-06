@@ -4,10 +4,19 @@ import { SectionHeading } from "../components/ui/SectionHeading";
 import { Users, ShieldCheck, Sparkles, Heart, Award, Eye, History } from "lucide-react";
 import { getLeadership, getArtists } from "../api/wordpress";
 
+type Leader = {
+  id: string | number;
+  name: string;
+  role: string;
+  image: string;
+  bio?: string;
+  tenure?: string;
+};
+
 
 
 const AboutView = () => {
-const [leaders, setLeaders] = useState([]);
+const [leaders, setLeaders] = useState<Leader[]>([]);
 const [loadingLeaders, setLoadingLeaders] = useState(true);
 const [membersPreview, setMembersPreview] = useState<any[]>([]);
 
@@ -50,14 +59,16 @@ useEffect(() => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="animate-in slide-in-from-left duration-700">
             <SectionHeading
-              title="Guardian of Nigeria's Artistic Soul"
-              subtitle="Since 1963, the Lagos Chapter has been the pulsating heart of contemporary African art, bridging tradition and futuristic expression."
+              title="About SNA Lagos"
             />
-            <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              Founded during the dawn of independence, the Society of Nigerian
-              Artists has consistently championed the cultural significance of
-              visual arts, ensuring that the Nigerian narrative is preserved and
-              celebrated globally.
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              The Society of Nigerian Artists (SNA) is the professional body for all practicing Visual Artists in Nigeria. It exists to encourage and promote Nigerian artists and serves as a platform for them to air their views and contribute positively to national development. It was founded in 1963 by artists emerging from various schools and colleges of art and members of the Zaria Art Society.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              In January 1964, the Society was inaugurated with its headquarters in Lagos and an exhibition was held that featured 84 works by 12 of the founding members. Subsequent exhibitions featured more artists and works drawn from broad categories of entry including sculpture, painting, graphics, photography, print, drawing, ceramics and textile design. At inception, the Society allowed membership to only formally trained artists. Presently, membership has expanded to include art students in tertiary institutions, self-taught and Nigerian artists in Diaspora.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              The Lagos State Chapter was established in 1982.
             </p>
             <div className="flex space-x-4">
               <div className="flex -space-x-3">
@@ -105,7 +116,7 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Core Values Section */}
+      {/* Core Values Section
       <section className="bg-gray-50 py-24 mb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
@@ -141,9 +152,12 @@ useEffect(() => {
                 className="bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-2 border border-gray-100"
               >
                 <div className="w-16 h-16 bg-[#bb6e31]/10 text-[#bb6e31] rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:rotate-12 group-hover:scale-110">
-                  {React.cloneElement(val.icon as React.ReactElement, {
-                    size: 32,
-                  })}
+                  {React.cloneElement(
+                    val.icon as React.ReactElement<{ size?: number }>,
+                    {
+                      size: 32,
+                    }
+                  )}
                 </div>
                 <h4 className="text-2xl font-bold mb-4 font-serif">
                   {val.title}
@@ -155,14 +169,13 @@ useEffect(() => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Detailed Mission & Vision Blocks */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div className="grid md:grid-cols-2 gap-12">
           <div className="bg-[#bb6e31] text-white p-16 rounded-[3.5rem] relative overflow-hidden group shadow-2xl">
             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-            <Award size={48} className="text-white mb-8" />
             <h3 className="text-4xl font-bold mb-6 font-serif">The Mission</h3>
             <p className="text-lg text-white leading-relaxed opacity-90 font-medium">
               To cultivate a resilient ecosystem for visual artists in Lagos. We
@@ -172,7 +185,6 @@ useEffect(() => {
             </p>
           </div>
           <div className="bg-white border-2 border-[#bb6e31]/10 p-16 rounded-[3.5rem] relative overflow-hidden group shadow-lg">
-            <Eye size={48} className="text-[#bb6e31] mb-8" />
             <h3 className="text-4xl font-bold mb-6 font-serif text-[#bb6e31]">
               The Vision
             </h3>
@@ -270,8 +282,8 @@ useEffect(() => {
         <div className="bg-[#bb6e31] rounded-[4rem] p-16 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] opacity-10"></div>
           <div className="relative z-10">
-            <h3 className="text-4xl md:text-5xl font-bold mb-6 font-serif">
-              Become Part of the Legacy
+            <h3 className="text-4xl md:text-5xl font-bold mb-6 font-serif capitalize">
+              Become a member
             </h3>
             <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto font-medium">
               Whether you are an established master or a rising star, SNA Lagos

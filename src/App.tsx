@@ -9,6 +9,7 @@ import DashboardView from "./views/DashboardView";
 import EditProfileView from "./views/EditProfile";
 import { User, Member } from "./types";
 import AboutView from "./views/AboutView";
+import ContactView from "./views/ContactView";
 import { useMembers } from "./hooks/useMembers";
 
 
@@ -61,6 +62,8 @@ const App = () => {
       case "about":
         console.log("About view active");
         return <AboutView />;
+      case "contact":
+        return <ContactView />;
       case "profile":
         return selectedMember ? (
           <ProfileView

@@ -41,7 +41,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
               onClick={() => setView("about")}
               className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "about" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
             >
-              About SNA
+              About SNA Lagos Chapter
             </button>
             <button
               onClick={() => setView("directory")}
@@ -49,33 +49,14 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             >
               Directory
             </button>
+            <button
+              onClick={() => setView("contact")}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "contact" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
+            >
+              Contact
+            </button>
 
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => setView("dashboard")}
-                  className="flex items-center space-x-2 bg-emerald-50 text-emerald-800 px-4 py-2 rounded-full text-sm font-semibold hover:bg-emerald-100 transition"
-                >
-                  <User size={16} />
-                  <span>Dashboard</span>
-                </button>
-                <button
-                  onClick={onLogout}
-                  title="Logout"
-                  className="text-gray-500 hover:text-red-500 transition-colors"
-                >
-                  <LogOut size={18} />
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setView("login")}
-                className="bg-[#bb6e31] text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#8c3e02] transition flex items-center space-x-2 shadow-md"
-              >
-                <LogIn size={16} />
-                <span>Member Portal</span>
-              </button>
-            )}
+
           </div>
 
           <div className="md:hidden">
@@ -109,7 +90,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             }}
             className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "about" ? "text-[#bb6e31]" : "text-gray-700"}`}
           >
-            About SNA
+            About SNA Lagos Chapter
           </button>
 
           <button
@@ -122,31 +103,15 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             Directory
           </button>
 
-          <div className="pt-6 border-t border-gray-50">
-            {user ? (
-              <button
-                onClick={() => {
-                  setView("dashboard");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full bg-emerald-50 text-emerald-800 py-4 rounded-2xl font-bold flex items-center justify-center space-x-2"
-              >
-                <User size={18} />
-                <span>Dashboard</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  setView("login");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full bg-emerald-800 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-lg"
-              >
-                <LogIn size={18} />
-                <span>Member Portal</span>
-              </button>
-            )}
-          </div>
+          <button
+            onClick={() => {
+              setView("contact");
+              setIsMobileMenuOpen(false);
+            }}
+            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "contact" ? "text-[#bb6e31]" : "text-gray-700"}`}
+          >
+            Contact
+          </button>
         </div>
       )}
     </nav>

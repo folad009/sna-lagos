@@ -18,8 +18,10 @@ export const Hero = ({ onExplore }: any) => {
             Tomorrow.
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-2xl">
-            SNA Lagos Chapter is the definitive professional body for visual
-            artists, uniting over 500 creators across the Heart of Africa.
+            The Society of Nigerian Artists (SNA) is the professional body for
+            all practicing Visual Artists in Nigeria. It exists to encourage and
+            promote Nigerian artists and serves as a platform for them to air
+            their views and contribute positively to national development.
           </p>
           <div className="flex flex-wrap gap-6 mb-20">
             <button
