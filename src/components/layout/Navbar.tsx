@@ -110,7 +110,7 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             }}
             className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "contact" ? "text-[#bb6e31]" : "text-gray-700"}`}
           >
-            Contact
+            Contact us
           </button>
         </div>
       )}
