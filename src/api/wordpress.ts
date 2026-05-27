@@ -1,4 +1,4 @@
-import { Member, PortfolioItem, UpcomingEvent } from "../types";
+import { Member, PortfolioItem, UpcomingEvent, Leader } from "../types";
 
 const BASE_URL = "https://thedesignhub.com.ng/sna-backend/wp-json";
 const WP_API = `${BASE_URL}/wp/v2`;
@@ -42,7 +42,7 @@ const mapArtistToMember = async (item: any): Promise<Member> => {
       // Explicit endpoint for fetching the full media object and extracting source_url
       mediaEndpoint: `${WP_API}/media/${id}`,
       title: "",
-      category: "Work",
+      category: "Work" as PortfolioItem["category"],
     })
   );
 
@@ -114,7 +114,7 @@ export const getMediaById = async (id: string): Promise<PortfolioItem> => {
     url: data.source_url,
     mediaEndpoint: `${WP_API}/media/${id}`,
     title: data.title?.rendered || "",
-    category: "Work",
+    category: "Work" as PortfolioItem["category"],
   };
 };
 
@@ -145,8 +145,97 @@ export const getUpcomingEvents = async (): Promise<UpcomingEvent[]> => {
   }));
 };
 
-export const getLeadership = async () => {
-  const res = await safeFetch(`${CUSTOM_REST_API}/leadership`);
+type WpLeaderImage = {
+  full_url?: string;
+  url?: string;
+  sizes?: Record<string, { url?: string }>;
+};
 
-  return res.json();
+type WpLeadershipItem = {
+  id: number;
+  menu_order?: number;
+  title?: { rendered?: string };
+  content?: { rendered?: string };
+  meta_box?: {
+    full_name?: string;
+    position?: string;
+    leader_image?: WpLeaderImage[];
+    tenure?: string;
+    bio?: string;
+  };
+};
+
+const extractLeaderImage = (
+  images: WpLeaderImage[] | undefined
+): string => {
+  const img = images?.[0];
+  if (!img) return "";
+  return (
+    img.sizes?.large?.url ||
+    img.sizes?.medium_large?.url ||
+    img.full_url ||
+    img.url ||
+    ""
+  );
+};
+
+const mapLeadershipItem = (item: WpLeadershipItem): Leader => {
+  const fields = item.meta_box || {};
+  return {
+    id: item.id,
+    name: fields.full_name?.trim() || item.title?.rendered?.trim() || "Unknown",
+    role: fields.position?.trim() || "",
+    image: extractLeaderImage(fields.leader_image),
+    bio: fields.bio?.trim() || "",
+    tenure: fields.tenure?.trim() || "",
+    menuOrder: item.menu_order ?? 0,
+  };
+};
+
+const leadershipRoleRank = (role: string): number => {
+  const r = role.toLowerCase();
+  if (
+    (/chair(man|person)|president/.test(r) || r === "chair") &&
+    !/vice|deputy|assistant|deputy/.test(r)
+  ) {
+    return 0;
+  }
+  if (/vice/.test(r) || /deputy chair/.test(r)) return 1;
+  if (/secretary/.test(r) && !/assistant/.test(r)) return 2;
+  if (/treasurer|financial/.test(r)) return 3;
+  if (/welfare/.test(r)) return 4;
+  if (/publicity|press|media|pro/.test(r)) return 5;
+  if (/exhibition/.test(r)) return 6;
+  return 50;
+};
+
+const sortLeaders = (a: Leader, b: Leader): number => {
+  const byRole = leadershipRoleRank(a.role) - leadershipRoleRank(b.role);
+  if (byRole !== 0) return byRole;
+  const byMenu = (a.menuOrder ?? 0) - (b.menuOrder ?? 0);
+  if (byMenu !== 0) return byMenu;
+  return a.name.localeCompare(b.name);
+};
+
+export const getLeadership = async (): Promise<Leader[]> => {
+  let page = 1;
+  let totalPages = 1;
+  const all: WpLeadershipItem[] = [];
+
+  do {
+    const res = await safeFetch(
+      `${WP_API}/leadership?per_page=100&page=${page}&status=publish&orderby=menu_order&order=asc`
+    );
+    const data = await res.json();
+    if (!Array.isArray(data)) {
+      throw new Error(
+        `Unexpected leadership response: ${JSON.stringify(data).slice(0, 200)}`
+      );
+    }
+    totalPages = Number(res.headers.get("X-WP-TotalPages")) || 1;
+    all.push(...data);
+    page++;
+  } while (page <= totalPages);
+
+  return all.map(mapLeadershipItem).sort(sortLeaders);
 };

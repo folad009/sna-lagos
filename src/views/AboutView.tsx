@@ -3,17 +3,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { Users, ShieldCheck, Sparkles, Heart, Award, Eye, History } from "lucide-react";
 import { getLeadership, getArtists } from "../api/wordpress";
-
-type Leader = {
-  id: string | number;
-  name: string;
-  role: string;
-  image: string;
-  bio?: string;
-  tenure?: string;
-};
-
-
+import { Leader } from "../types";
+import { LeaderCard } from "../components/ui/LeaderCard";
 
 const AboutView = () => {
 const [leaders, setLeaders] = useState<Leader[]>([]);
@@ -235,45 +226,7 @@ useEffect(() => {
   {!loadingLeaders &&
     !leadersError &&
     leaders.length > 0 &&
-    leaders.map((leader) => (
-      <div key={leader.id} className="group">
-        <div className="relative mb-8">
-          <div className="aspect-[3/4] overflow-hidden shadow-xl border border-gray-100">
-            <img
-              src={leader.image}
-              alt={leader.name}
-              onError={(e) => {
-                const img = e.target as HTMLImageElement;
-                img.onerror = null;
-                img.src = "/placeholder-leader.png";
-              }}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            {leader.bio && (
-              <div className="absolute inset-0 bg-gradient-to-t from-[#bb6e31]/90 via-[#bb6e31]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
-                <p className="text-sm text-white leading-relaxed italic">
-                  {leader.bio}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <h4 className="text-2xl font-bold font-serif mb-1 text-gray-900">
-          {leader.name}
-        </h4>
-
-        <p className="text-[#bb6e31] font-bold text-xs uppercase tracking-[0.2em]">
-          {leader.role}
-        </p>
-
-        {leader.tenure && (
-          <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">
-            {leader.tenure}
-          </p>
-        )}
-      </div>
-    ))}
+    leaders.map((leader) => <LeaderCard key={leader.id} leader={leader} />)}
 </div>
       </div>
 

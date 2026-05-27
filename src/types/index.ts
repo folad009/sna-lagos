@@ -37,10 +37,13 @@ export interface Member {
 }
 
 export interface Leader {
+  id: string | number;
   name: string;
   role: string;
   image: string;
-  bio: string;
+  bio?: string;
+  tenure?: string;
+  menuOrder?: number;
 }
 
 export interface User {
