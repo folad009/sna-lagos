@@ -12,8 +12,16 @@ let artistsCache: Member[] | null = null;
 // --------------------------------------------------
 // Helpers
 // --------------------------------------------------
-const safeFetch = async (url: string) => {
-  const res = await fetch(url);
+const NO_CACHE: RequestInit = {
+  cache: "no-store",
+  headers: {
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+  },
+};
+
+const safeFetch = async (url: string, init?: RequestInit) => {
+  const res = await fetch(url, init);
   if (!res.ok) {
     throw new Error(`Request failed: ${url}`);
   }
@@ -193,19 +201,23 @@ const mapLeadershipItem = (item: WpLeadershipItem): Leader => {
 };
 
 const leadershipRoleRank = (role: string): number => {
-  const r = role.toLowerCase();
+  const r = role.toLowerCase().trim();
   if (
     (/chair(man|person)|president/.test(r) || r === "chair") &&
-    !/vice|deputy|assistant|deputy/.test(r)
+    !/vice|deputy|assistant/.test(r)
   ) {
     return 0;
   }
   if (/vice/.test(r) || /deputy chair/.test(r)) return 1;
-  if (/secretary/.test(r) && !/assistant/.test(r)) return 2;
-  if (/treasurer|financial/.test(r)) return 3;
-  if (/welfare/.test(r)) return 4;
-  if (/publicity|press|media|pro/.test(r)) return 5;
-  if (/exhibition/.test(r)) return 6;
+  if (/general secretary/.test(r) && !/assistant/.test(r)) return 2;
+  if (/assistant.*secretary|asst.*secretary/.test(r)) return 3;
+  if (/financial.*sec/.test(r)) return 4;
+  if (/treasurer/.test(r)) return 5;
+  if (/welfare/.test(r)) return 6;
+  if (/public relations|relations officer|press officer|publicity/.test(r)) {
+    return 7;
+  }
+  if (/secretary/.test(r)) return 8;
   return 50;
 };
 
@@ -224,7 +236,8 @@ export const getLeadership = async (): Promise<Leader[]> => {
 
   do {
     const res = await safeFetch(
-      `${WP_API}/leadership?per_page=100&page=${page}&status=publish&orderby=menu_order&order=asc`
+      `${WP_API}/leadership?per_page=100&page=${page}&status=publish&orderby=menu_order&order=asc`,
+      NO_CACHE
     );
     const data = await res.json();
     if (!Array.isArray(data)) {

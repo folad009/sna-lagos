@@ -12,39 +12,58 @@ const [loadingLeaders, setLoadingLeaders] = useState(true);
 const [membersPreview, setMembersPreview] = useState<any[]>([]);
 
 const [leadersError, setLeadersError] = useState(false);
-const fetchedRef = useRef(false);
+const membersFetchedRef = useRef(false);
 
-useEffect(() => {
-    if (fetchedRef.current) return;
-    fetchedRef.current = true;
+  useEffect(() => {
+    let cancelled = false;
 
-    const loadData = async () => {
-      const [leadersResult, membersResult] = await Promise.allSettled([
-        getLeadership(),
-        getArtists(),
-      ]);
-
-      if (leadersResult.status === "fulfilled") {
-        setLeaders(leadersResult.value || []);
-      } else {
-        console.error("Leadership fetch failed", leadersResult.reason);
-        setLeadersError(true);
+    const loadLeaders = async () => {
+      setLoadingLeaders(true);
+      setLeadersError(false);
+      try {
+        const data = await getLeadership();
+        if (!cancelled) setLeaders(data);
+      } catch (err) {
+        console.error("Leadership fetch failed", err);
+        if (!cancelled) setLeadersError(true);
+      } finally {
+        if (!cancelled) setLoadingLeaders(false);
       }
-
-      if (membersResult.status === "fulfilled") {
-        setMembersPreview((membersResult.value || []).slice(0, 6));
-      } else {
-        console.error("Artists fetch failed", membersResult.reason);
-      }
-
-      setLoadingLeaders(false);
     };
 
-    loadData();
+    loadLeaders();
+
+    const onVisible = () => {
+      if (document.visibilityState === "visible") loadLeaders();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (membersFetchedRef.current) return;
+    membersFetchedRef.current = true;
+
+    let cancelled = false;
+    getArtists()
+      .then((members) => {
+        if (!cancelled) setMembersPreview(members.slice(0, 6));
+      })
+      .catch((err) => {
+        console.error("Artists fetch failed", err);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
-    <div className="pt-32 pb-20 overflow-hidden">
+    <div className="pt-32 pb-20 overflow-x-hidden">
       {/* Mission Hero */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">

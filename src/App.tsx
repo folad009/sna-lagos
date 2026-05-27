@@ -15,14 +15,22 @@ import { useMembers } from "./hooks/useMembers";
 
 const App = () => {
   const [view, setView] = useState("home");
+  const [aboutMountKey, setAboutMountKey] = useState(0);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
   const {members, loading} = useMembers();
 
+  const navigate = (next: string) => {
+    if (next === "about" && view !== "about") {
+      setAboutMountKey((k) => k + 1);
+    }
+    setView(next);
+  };
+
   const handleLogout = () => {
     setUser(null);
-    setView("home");
+    navigate("home");
   };
 
 
@@ -32,10 +40,10 @@ const App = () => {
         return (
           <HomeView
             members={members}
-            onExplore={() => setView("directory")}
+            onExplore={() => navigate("directory")}
             onSelectMember={(member) => {
               setSelectedMember(member);
-              setView("profile");
+              navigate("profile");
               window.scrollTo(0, 0);
             }}
           />
@@ -54,21 +62,20 @@ const App = () => {
             members={members}
             onSelectMember={(m) => {
               setSelectedMember(m);
-              setView("profile");
+              navigate("profile");
             }}
           />
         );
 
       case "about":
-        console.log("About view active");
-        return <AboutView />;
+        return <AboutView key={aboutMountKey} />;
       case "contact":
         return <ContactView />;
       case "profile":
         return selectedMember ? (
           <ProfileView
             member={selectedMember}
-            onBack={() => setView("directory")}
+            onBack={() => navigate("directory")}
           />
         ) : null;
 
@@ -77,14 +84,14 @@ const App = () => {
 
       case "dashboard":
         return user ? (
-          <DashboardView user={user} onEdit={() => setView("edit-profile")} />
+          <DashboardView user={user} onEdit={() => navigate("edit-profile")} />
         ) : (
           <LoginView onLogin={setUser} />
         );
 
       case "edit-profile":
         return (
-          <EditProfileView user={user} onBack={() => setView("dashboard")} />
+          <EditProfileView user={user} onBack={() => navigate("dashboard")} />
         );
 
       default:
@@ -96,12 +103,12 @@ const App = () => {
     <>
       <Navbar
         activeView={view}
-        setView={setView}
+        setView={navigate}
         user={user}
         onLogout={handleLogout}
       />
       <main>{renderContent()}</main>
-      <Footer setView={setView} />
+      <Footer setView={navigate} />
     </>
   );
 };
