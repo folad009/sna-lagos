@@ -13,6 +13,7 @@ const [membersPreview, setMembersPreview] = useState<any[]>([]);
 
 const [leadersError, setLeadersError] = useState(false);
 const membersFetchedRef = useRef(false);
+const loadLeadersRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,6 +32,11 @@ const membersFetchedRef = useRef(false);
       }
     };
 
+    loadLeadersRef.current = () => {
+      cancelled = false;
+      loadLeaders();
+    };
+
     loadLeaders();
 
     const onVisible = () => {
@@ -40,6 +46,7 @@ const membersFetchedRef = useRef(false);
 
     return () => {
       cancelled = true;
+      loadLeadersRef.current = null;
       document.removeEventListener("visibilitychange", onVisible);
     };
   }, []);
@@ -229,9 +236,16 @@ const membersFetchedRef = useRef(false);
   )}
 
   {!loadingLeaders && leadersError && (
-    <p className="text-red-500 col-span-full text-center py-10">
-      Unable to load leadership.
-    </p>
+    <div className="col-span-full flex flex-col items-center gap-4 py-10 text-center">
+      <p className="text-red-500">Unable to load leadership.</p>
+      <button
+        type="button"
+        onClick={() => loadLeadersRef.current?.()}
+        className="rounded-2xl bg-[#bb6e31] px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-[#8c3e02]"
+      >
+        Try again
+      </button>
+    </div>
   )}
 
   {!loadingLeaders &&

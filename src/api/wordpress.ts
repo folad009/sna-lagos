@@ -12,13 +12,8 @@ let artistsCache: Member[] | null = null;
 // --------------------------------------------------
 // Helpers
 // --------------------------------------------------
-const NO_CACHE: RequestInit = {
-  cache: "no-store",
-  headers: {
-    "Cache-Control": "no-cache",
-    Pragma: "no-cache",
-  },
-};
+/** Browser cache mode only — do not set Cache-Control/Pragma request headers (breaks CORS on WP). */
+const NO_CACHE: RequestInit = { cache: "no-store" };
 
 const safeFetch = async (url: string, init?: RequestInit) => {
   const res = await fetch(url, init);
