@@ -85,6 +85,7 @@ const ContactView = () => {
     <div className="pt-32 pb-24 animate-in fade-in duration-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          eyebrow="Get in touch"
           title="Contact Us"
           subtitle="Reach the Lagos State Chapter secretariat for membership, exhibitions, and general enquiries."
         />
@@ -178,7 +179,7 @@ const ContactView = () => {
             </ul>
           </div>
 
-          <div className="rounded-[2.5rem] border border-gray-100 bg-gradient-to-br from-emerald-50/80 to-white p-10 md:p-12 shadow-lg">
+          <div className="rounded-[2.5rem] border border-gray-100 bg-gradient-to-br from-brand-50/80 to-white p-10 md:p-12 shadow-lg">
             <h4 className="text-xl font-bold font-serif text-gray-900 mb-4">
               Visiting the chapter office
             </h4>
@@ -223,7 +224,7 @@ const ContactView = () => {
 
             {formStatus === "sent" ? (
               <div className="py-10 text-center animate-in fade-in slide-in-from-bottom-2 duration-300">
-                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-50 text-green-700">
                   <Check size={40} strokeWidth={2.5} />
                 </div>
                 <h4 className="text-xl font-bold font-serif text-gray-900 mb-2">

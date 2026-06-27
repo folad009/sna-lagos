@@ -3,30 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bb6e31">
     <title>SNA Lagos - Society of Nigerian Artists</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Centralised design tokens for the Tailwind Play CDN.
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Terracotta brand scale (500 is the primary brand colour, 700 the
+              // historical hover #8c3e02). Replaces the previous emerald palette.
+              brand: {
+                50: "#fbf4ed",
+                100: "#f4e2d1",
+                200: "#e7c19f",
+                300: "#d99c6b",
+                400: "#cb7e44",
+                500: "#bb6e31",
+                600: "#a55f29",
+                700: "#8c3e02",
+                800: "#6f3410",
+                900: "#5b2c12",
+              },
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-22px)" },
+              },
+            },
+            animation: {
+              "float-slow": "float 9s ease-in-out infinite",
+              "float-slower": "float 13s ease-in-out infinite",
+            },
+          },
+        },
+      };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand: #bb6e31;
+            --brand-dark: #8c3e02;
+        }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #fdfcfb;
             color: #1a1a1a;
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
         h1, h2, h3, h4, .font-serif {
             font-family: 'Playfair Display', serif;
         }
+        ::selection {
+            background-color: rgba(187, 110, 49, 0.18);
+            color: #5b2c12;
+        }
+        /* Brand-tinted focus ring for keyboard users only */
+        :focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        /* Subtle branded scrollbar */
+        ::-webkit-scrollbar { width: 11px; height: 11px; }
+        ::-webkit-scrollbar-track { background: #f6f1ec; }
+        ::-webkit-scrollbar-thumb {
+            background: #d9c4b2;
+            border-radius: 999px;
+            border: 3px solid #f6f1ec;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+
         .art-gradient {
-            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            background: linear-gradient(135deg, #bb6e31 0%, #8c3e02 100%);
         }
         .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(22, 101, 52, 0.1);
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(16px) saturate(140%);
+            border-bottom: 1px solid rgba(187, 110, 49, 0.12);
         }
-        
+        .gradient-text {
+            background: linear-gradient(120deg, #bb6e31 0%, #e08b3e 45%, #8c3e02 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Horizontal edge-fade mask for marquees / scrollers */
+        .edge-fade-x {
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+        }
+
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -40,38 +117,43 @@
           animation-play-state: paused;
         }
 
-        /* Generic Entrance Animations */
+        /* Generic Entrance Animations (tailwindcss-animate compatible) */
         @keyframes enter {
             from {
-                opacity: 0;
-                transform: var(--tw-enter-translate-x, 0) var(--tw-enter-translate-y, 0) var(--tw-enter-scale, 1) var(--tw-enter-rotate, 0);
+                opacity: var(--tw-enter-opacity, 1);
+                transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+                           scale(var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0));
             }
         }
-        .animate-in {
-            animation: enter 0.3s ease-out both;
-        }
-        .fade-in {
-            --tw-enter-opacity: 0;
-        }
-        .zoom-in-95 {
-            --tw-enter-scale: 0.95;
-        }
-        .slide-in-from-top-2 {
-            --tw-enter-translate-y: -0.5rem;
-        }
-        .duration-300 {
-            animation-duration: 300ms;
-        }
-        .duration-700 {
-            animation-duration: 700ms;
-        }
+        .animate-in { animation: enter 0.5s ease-out both; }
+        .fade-in { --tw-enter-opacity: 0; }
+        .zoom-in, .zoom-in-95 { --tw-enter-scale: 0.95; }
+        .zoom-in-50 { --tw-enter-scale: 0.5; }
+        .slide-in-from-top-1 { --tw-enter-translate-y: -0.25rem; }
+        .slide-in-from-top-2 { --tw-enter-translate-y: -0.5rem; }
+        .slide-in-from-bottom-2 { --tw-enter-translate-y: 0.5rem; }
+        .slide-in-from-bottom-4 { --tw-enter-translate-y: 1rem; }
+        .slide-in-from-left { --tw-enter-translate-x: -1.5rem; }
+        .slide-in-from-left-4 { --tw-enter-translate-x: -1rem; }
+        .slide-in-from-right { --tw-enter-translate-x: 1.5rem; }
+        .duration-300 { animation-duration: 300ms; }
+        .duration-500 { animation-duration: 500ms; }
+        .duration-700 { animation-duration: 700ms; }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .animate-marquee { animation: none !important; }
         }
     </style>
 

@@ -68,7 +68,7 @@ const ProfileView = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
           onClick={onBack}
-          className="flex items-center text-gray-500 hover:text-emerald-800 mb-8 font-semibold transition group"
+          className="flex items-center text-gray-500 hover:text-brand-500 mb-8 font-semibold transition group"
         >
           <ChevronRight
             size={20}
@@ -127,14 +127,14 @@ const ProfileView = ({
                         href={member.socials.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-gray-400 hover:text-emerald-600 transition-colors"
+                        className="text-gray-400 hover:text-brand-600 transition-colors"
                       >
                         <Globe size={24} />
                       </a>
                     )}
                     <button
                       onClick={() => setIsShareModalOpen(true)}
-                      className="text-gray-400 hover:text-emerald-800 transition-colors ml-auto flex items-center space-x-2 font-bold text-xs uppercase tracking-widest"
+                      className="text-gray-400 hover:text-brand-500 transition-colors ml-auto flex items-center space-x-2 font-bold text-xs uppercase tracking-widest"
                     >
                       <Share2 size={18} />
                       <span>Share</span>
@@ -142,7 +142,7 @@ const ProfileView = ({
                   </div>
                   <button
                     onClick={() => setIsContactModalOpen(true)}
-                    className="w-full bg-emerald-800 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-3 hover:bg-emerald-900 transition shadow-lg hover:shadow-emerald-900/20 active:scale-[0.98]"
+                    className="w-full bg-brand-500 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-3 hover:bg-brand-700 transition shadow-lg hover:shadow-brand-700/20 active:scale-[0.98]"
                   >
                     <Mail size={20} />
                     <span>Contact Artist</span>
@@ -153,7 +153,7 @@ const ProfileView = ({
           </div>
           <div className="lg:col-span-8">
             <div className="mb-12">
-              <span className="text-emerald-800 font-bold uppercase tracking-widest text-sm">
+              <span className="text-brand-500 font-bold uppercase tracking-widest text-sm">
                 {member.category}
               </span>
               <h1 className="text-5xl font-bold mt-2 mb-6 font-serif">
@@ -173,7 +173,7 @@ const ProfileView = ({
                   <button
                     key={cat}
                     onClick={() => setPortfolioFilter(cat)}
-                    className={`px-4 py-2 rounded-full text-xs font-bold transition whitespace-nowrap ${portfolioFilter === cat ? "bg-emerald-800 text-white shadow-lg" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+                    className={`px-4 py-2 rounded-full text-xs font-bold transition whitespace-nowrap ${portfolioFilter === cat ? "bg-brand-500 text-white shadow-lg" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
                   >
                     {cat}
                   </button>
@@ -197,7 +197,7 @@ const ProfileView = ({
                     <span className="text-white font-bold text-lg mb-1">
                       {item.title}
                     </span>
-                    <span className="text-emerald-200 text-xs uppercase tracking-widest font-bold">
+                    <span className="text-brand-200 text-xs uppercase tracking-widest font-bold">
                       {item.category}
                     </span>
                     <div className="mt-4 flex items-center text-white/90 text-sm font-semibold">
@@ -246,7 +246,7 @@ const ProfileView = ({
               <h3 className="text-3xl md:text-4xl font-bold font-serif mb-2">
                 {selectedWork.title}
               </h3>
-              <p className="text-emerald-400 uppercase tracking-[0.2em] text-xs font-bold">
+              <p className="text-brand-300 uppercase tracking-[0.2em] text-xs font-bold">
                 {selectedWork.category}
               </p>
             </div>

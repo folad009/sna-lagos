@@ -50,6 +50,18 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
               Directory
             </button>
             <button
+              onClick={() => setView("gallery")}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "gallery" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
+            >
+              Gallery
+            </button>
+            <button
+              onClick={() => setView("news")}
+              className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "news" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
+            >
+              News
+            </button>
+            <button
               onClick={() => setView("contact")}
               className={`text-sm font-medium hover:text-[#bb6e31] transition ${activeView === "contact" ? "text-[#bb6e31] underline underline-offset-8" : "text-gray-600"}`}
             >
@@ -101,6 +113,26 @@ const Navbar = ({ activeView, setView, user, onLogout }: NavbarProps) => {
             className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "directory" ? "text-[#bb6e31]" : "text-gray-700"}`}
           >
             Directory
+          </button>
+
+          <button
+            onClick={() => {
+              setView("gallery");
+              setIsMobileMenuOpen(false);
+            }}
+            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "gallery" ? "text-[#bb6e31]" : "text-gray-700"}`}
+          >
+            Gallery
+          </button>
+
+          <button
+            onClick={() => {
+              setView("news");
+              setIsMobileMenuOpen(false);
+            }}
+            className={`text-left text-xl font-bold font-serif transition-colors py-2 ${activeView === "news" ? "text-[#bb6e31]" : "text-gray-700"}`}
+          >
+            News
           </button>
 
           <button

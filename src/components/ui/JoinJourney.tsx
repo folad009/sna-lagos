@@ -10,7 +10,7 @@ export const JoinJourney = () => {
           centered
         />
         <div className="grid md:grid-cols-3 gap-16 relative mt-20">
-          <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-emerald-100 -z-10"></div>
+          <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-brand-200 to-transparent -z-10"></div>
           {[
             {
               step: "01",

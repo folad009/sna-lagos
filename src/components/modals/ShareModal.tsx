@@ -72,7 +72,7 @@ export const ShareModal = ({
           <X size={24} />
         </button>
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-800 mx-auto mb-4">
+          <div className="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-500 mx-auto mb-4">
             <Share2 size={32} />
           </div>
           <h3 className="text-2xl font-bold font-serif">
@@ -108,17 +108,17 @@ export const ShareModal = ({
             />
             <button
               onClick={copyToClipboard}
-              className="bg-white text-emerald-800 p-3 rounded-xl shadow-sm border border-gray-100 hover:bg-emerald-50 transition flex items-center justify-center group-active:scale-95"
+              className="bg-white text-brand-500 p-3 rounded-xl shadow-sm border border-gray-100 hover:bg-brand-50 transition flex items-center justify-center group-active:scale-95"
             >
               {copied ? (
-                <Check size={18} className="text-emerald-600" />
+                <Check size={18} className="text-green-600" />
               ) : (
                 <Copy size={18} />
               )}
             </button>
           </div>
           {copied && (
-            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-emerald-600 animate-in fade-in slide-in-from-top-1">
+            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-green-600 animate-in fade-in slide-in-from-top-1">
               Link Copied!
             </span>
           )}

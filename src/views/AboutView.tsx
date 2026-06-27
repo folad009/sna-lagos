@@ -4,7 +4,7 @@ import { SectionHeading } from "../components/ui/SectionHeading";
 import { Users, ShieldCheck, Sparkles, Heart, Award, Eye, History } from "lucide-react";
 import { getLeadership, getArtists } from "../api/wordpress";
 import { Leader } from "../types";
-import { LeaderCard } from "../components/ui/LeaderCard";
+import { LeadershipCarousel } from "../components/ui/LeadershipCarousel";
 
 const AboutView = () => {
 const [leaders, setLeaders] = useState<Leader[]>([]);
@@ -113,13 +113,13 @@ const loadLeadersRef = useRef<(() => void) | null>(null);
             </div>
           </div>
           <div className="relative animate-in zoom-in duration-700">
-            <div className="aspect-[4/5] bg-emerald-50 rounded-[3rem] overflow-hidden relative shadow-2xl border border-gray-100">
+            <div className="aspect-[4/5] bg-brand-50 rounded-[3rem] overflow-hidden relative shadow-2xl border border-gray-100">
               <img
                 src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=1200&fit=crop"
                 className="w-full h-full object-cover"
                 alt="Art Workshop"
               />
-              <div className="absolute inset-0 bg-emerald-900/10"></div>
+              <div className="absolute inset-0 bg-brand-900/10"></div>
             </div>
             <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-xl max-w-xs hidden md:block border border-gray-50">
               <p className="text-[#bb6e31] font-bold text-lg mb-2 italic font-serif">
@@ -228,39 +228,34 @@ const loadLeadersRef = useRef<(() => void) | null>(null);
             </p>
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-  {loadingLeaders && (
-    <p className="text-gray-400 col-span-full text-center py-10">
-      Loading leadership...
-    </p>
-  )}
+        {loadingLeaders && (
+          <p className="text-gray-400 text-center py-10">
+            Loading leadership...
+          </p>
+        )}
 
-  {!loadingLeaders && leadersError && (
-    <div className="col-span-full flex flex-col items-center gap-4 py-10 text-center">
-      <p className="text-red-500">Unable to load leadership.</p>
-      <button
-        type="button"
-        onClick={() => loadLeadersRef.current?.()}
-        className="rounded-2xl bg-[#bb6e31] px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-[#8c3e02]"
-      >
-        Try again
-      </button>
-    </div>
-  )}
+        {!loadingLeaders && leadersError && (
+          <div className="flex flex-col items-center gap-4 py-10 text-center">
+            <p className="text-red-500">Unable to load leadership.</p>
+            <button
+              type="button"
+              onClick={() => loadLeadersRef.current?.()}
+              className="rounded-2xl bg-[#bb6e31] px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-[#8c3e02]"
+            >
+              Try again
+            </button>
+          </div>
+        )}
 
-  {!loadingLeaders &&
-    !leadersError &&
-    leaders.length === 0 && (
-      <p className="text-gray-400 col-span-full text-center py-10">
-        No leadership data available.
-      </p>
-    )}
+        {!loadingLeaders && !leadersError && leaders.length === 0 && (
+          <p className="text-gray-400 text-center py-10">
+            No leadership data available.
+          </p>
+        )}
 
-  {!loadingLeaders &&
-    !leadersError &&
-    leaders.length > 0 &&
-    leaders.map((leader) => <LeaderCard key={leader.id} leader={leader} />)}
-</div>
+        {!loadingLeaders && !leadersError && leaders.length > 0 && (
+          <LeadershipCarousel leaders={leaders} />
+        )}
       </div>
 
       {/* Final CTA */}
@@ -276,7 +271,7 @@ const loadLeadersRef = useRef<(() => void) | null>(null);
               offers the community and platform you need to excel.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <button className="bg-white text-[#bb6e31] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-50 transition-all shadow-xl hover:scale-105 active:scale-95">
+              <button className="bg-white text-[#bb6e31] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-brand-50 transition-all shadow-xl hover:scale-105 active:scale-95">
                 Apply for Membership
               </button>
               <button className="border-2 border-white/20 bg-white/5 backdrop-blur-md text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all shadow-xl hover:scale-105 active:scale-95">

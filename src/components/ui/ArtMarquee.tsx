@@ -13,11 +13,18 @@ export const ArtMarquee = () => {
   ];
 
   return (
-    <div className="relative py-12 bg-white overflow-hidden select-none">
+    <div className="relative py-12 bg-white overflow-hidden select-none edge-fade-x">
       <div className="flex animate-marquee whitespace-nowrap">
         {[...images, ...images].map((src, i) => (
-          <div key={i} className="mx-4 w-64 h-64 shrink-0 rounded-3xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
-            <img src={src} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="SNA Artwork" />
+          <div
+            key={i}
+            className="group mx-4 w-64 h-64 shrink-0 rounded-3xl overflow-hidden shadow-lg ring-1 ring-black/5 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:ring-brand-500/30"
+          >
+            <img
+              src={src}
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110"
+              alt="Artwork by a member of the Society of Nigerian Artists"
+            />
           </div>
         ))}
       </div>

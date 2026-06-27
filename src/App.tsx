@@ -10,6 +10,8 @@ import EditProfileView from "./views/EditProfile";
 import { User, Member } from "./types";
 import AboutView from "./views/AboutView";
 import ContactView from "./views/ContactView";
+import GalleryView from "./views/GalleryView";
+import NewsView from "./views/NewsView";
 import { useMembers } from "./hooks/useMembers";
 
 
@@ -69,6 +71,10 @@ const App = () => {
 
       case "about":
         return <AboutView key={aboutMountKey} />;
+      case "gallery":
+        return <GalleryView />;
+      case "news":
+        return <NewsView />;
       case "contact":
         return <ContactView />;
       case "profile":

@@ -35,7 +35,7 @@ const HomeView = ({ members, onExplore, onSelectMember }: HomeViewProps) => {
           <h3 className="text-4xl md:text-5xl font-bold mb-6 font-serif">
             The Collector's Circle
           </h3>
-          <p className="text-lg text-emerald-100/70 mb-12 leading-relaxed">
+          <p className="text-lg text-white/70 mb-12 leading-relaxed">
             Subscribe to our curated monthly newsletter for early access to
             private viewings, artist studio visits, and exclusive collection
             opportunities.
@@ -47,9 +47,9 @@ const HomeView = ({ members, onExplore, onSelectMember }: HomeViewProps) => {
             <input
               type="email"
               placeholder="Enter your email address"
-              className="flex-1 bg-white/10 border border-white/20 px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-emerald-400 transition placeholder:text-white/40 font-medium"
+              className="flex-1 bg-white/10 border border-white/20 px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-white/60 transition placeholder:text-white/40 font-medium text-white"
             />
-            <button className="bg-white text-emerald-900 px-8 py-4 rounded-xl font-bold hover:bg-emerald-50 transition shadow-xl active:scale-95">
+            <button className="bg-white text-brand-700 px-8 py-4 rounded-xl font-bold hover:bg-brand-50 transition shadow-xl active:scale-95">
               Join Circle
             </button>
           </form>

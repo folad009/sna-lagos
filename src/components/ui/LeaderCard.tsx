@@ -29,7 +29,7 @@ export const LeaderCard = ({ leader }: { leader: Leader }) => {
             />
           ) : (
             <div
-              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#bb6e31]/15 via-white to-emerald-50"
+              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-500/15 via-white to-brand-50"
               aria-hidden
             >
               <span className="text-5xl font-bold font-serif text-[#bb6e31]/75">

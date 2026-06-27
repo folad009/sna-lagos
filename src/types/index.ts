@@ -51,3 +51,34 @@ export interface User {
   name: string;
   email: string;
 }
+
+export interface GalleryItem {
+  id: string | number;
+  title: string;
+  artist?: string;
+  category: string;
+  /** Full-resolution image used in the lightbox. */
+  image: string;
+  /** Optional smaller image for grid thumbnails (falls back to `image`). */
+  thumbnail?: string;
+  year?: string;
+  medium?: string;
+  /** Optional aspect ratio (width / height) to preserve masonry layout before load. */
+  ratio?: number;
+}
+
+export interface NewsArticle {
+  id: string | number;
+  slug?: string;
+  title: string;
+  excerpt: string;
+  /** Rendered HTML body from the CMS. */
+  content: string;
+  image: string;
+  category: string;
+  author: string;
+  /** ISO date string. */
+  date: string;
+  readingTime?: number;
+  featured?: boolean;
+}

@@ -48,7 +48,7 @@ export const ContactModal = ({
           <X size={24} />
         </button>
         <div className="mb-10 text-center">
-          <div className="w-16 h-16 bg-emerald-800 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-brand-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 shadow-lg">
             <Mail size={32} />
           </div>
           <h3 className="text-3xl font-bold font-serif">
@@ -60,7 +60,7 @@ export const ContactModal = ({
         </div>
         {sent ? (
           <div className="py-12 text-center animate-in fade-in slide-in-from-bottom-4">
-            <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
               <Check size={40} />
             </div>
             <h4 className="text-2xl font-bold mb-2">Message Sent!</h4>
@@ -70,7 +70,7 @@ export const ContactModal = ({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xs uppercase tracking-widest mb-2 bg-emerald-50/50 w-fit px-3 py-1.5 rounded-lg border border-emerald-100">
+            <div className="flex items-center space-x-2 text-brand-600 font-bold text-xs uppercase tracking-widest mb-2 bg-brand-50/50 w-fit px-3 py-1.5 rounded-lg border border-brand-100">
               <AtSign size={14} />
               <span>To: {member.email}</span>
             </div>
@@ -88,7 +88,7 @@ export const ContactModal = ({
                     required
                     type="text"
                     placeholder="John Doe"
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-100 focus:ring-2 focus:ring-emerald-800 outline-none transition-all shadow-sm bg-gray-50/50"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-100 focus:ring-2 focus:ring-brand-500 outline-none transition-all shadow-sm bg-gray-50/50"
                   />
                 </div>
               </div>
@@ -105,7 +105,7 @@ export const ContactModal = ({
                     required
                     type="email"
                     placeholder="john@example.com"
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-100 focus:ring-2 focus:ring-emerald-800 outline-none transition-all shadow-sm bg-gray-50/50"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-100 focus:ring-2 focus:ring-brand-500 outline-none transition-all shadow-sm bg-gray-50/50"
                   />
                 </div>
               </div>
@@ -118,7 +118,7 @@ export const ContactModal = ({
                 required
                 type="text"
                 placeholder="Inquiry regarding your latest work"
-                className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:ring-2 focus:ring-emerald-800 outline-none transition-all shadow-sm bg-gray-50/50"
+                className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:ring-2 focus:ring-brand-500 outline-none transition-all shadow-sm bg-gray-50/50"
               />
             </div>
             <div className="space-y-2">
@@ -134,14 +134,14 @@ export const ContactModal = ({
                   required
                   rows={4}
                   placeholder="Tell the artist about your interest..."
-                  className="w-full pl-11 pr-4 py-4 rounded-xl border border-gray-100 focus:ring-2 focus:ring-emerald-800 outline-none transition-all shadow-sm bg-gray-50/50 resize-none"
+                  className="w-full pl-11 pr-4 py-4 rounded-xl border border-gray-100 focus:ring-2 focus:ring-brand-500 outline-none transition-all shadow-sm bg-gray-50/50 resize-none"
                 />
               </div>
             </div>
             <button
               disabled={loading}
               type="submit"
-              className="w-full bg-emerald-800 text-white py-4 rounded-2xl font-bold hover:bg-emerald-900 transition-all shadow-xl hover:shadow-emerald-900/30 flex items-center justify-center space-x-2 active:scale-[0.98]"
+              className="w-full bg-brand-500 text-white py-4 rounded-2xl font-bold hover:bg-brand-700 transition-all shadow-xl hover:shadow-brand-700/30 flex items-center justify-center space-x-2 active:scale-[0.98]"
             >
               {loading ? (
                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

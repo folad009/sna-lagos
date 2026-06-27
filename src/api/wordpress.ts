@@ -1,4 +1,12 @@
-import { Member, PortfolioItem, UpcomingEvent, Leader } from "../types";
+import {
+  Member,
+  PortfolioItem,
+  UpcomingEvent,
+  Leader,
+  GalleryItem,
+  NewsArticle,
+} from "../types";
+import { PLACEHOLDER_GALLERY, PLACEHOLDER_NEWS } from "../data/placeholders";
 
 const BASE_URL = "https://thedesignhub.com.ng/sna-backend/wp-json";
 const WP_API = `${BASE_URL}/wp/v2`;
@@ -246,4 +254,107 @@ export const getLeadership = async (): Promise<Leader[]> => {
   } while (page <= totalPages);
 
   return all.map(mapLeadershipItem).sort(sortLeaders);
+};
+
+// --------------------------------------------------
+// Gallery
+// --------------------------------------------------
+// Live source (when ready): a custom "artwork" post type or a custom
+// REST route, e.g. `${WP_API}/artwork?_embed` or `${CUSTOM_REST_API}/gallery`.
+// Until the CMS endpoint is published we fall back to placeholder content so
+// the page renders fully. The mapper below shows the expected shape.
+const GALLERY_ENDPOINT = `${WP_API}/artwork?_embed&per_page=100`;
+
+const stripHtml = (html: string): string =>
+  html
+    .replace(/<[^>]*>/g, "")
+    .replace(/&hellip;/g, "…")
+    .replace(/&#8217;/g, "’")
+    .replace(/&#8220;|&#8221;/g, '"')
+    .replace(/&amp;/g, "&")
+    .trim();
+
+const mapGalleryItem = (item: any): GalleryItem => {
+  const fields = item.meta_box || {};
+  const featured = item._embedded?.["wp:featuredmedia"]?.[0];
+  const image =
+    featured && !featured.code ? featured.source_url : fields.image || "";
+  const sizes = featured?.media_details?.sizes;
+
+  return {
+    id: item.id,
+    title: stripHtml(item.title?.rendered || "Untitled"),
+    artist: fields.artist || "",
+    category: fields.category || "Artwork",
+    image,
+    thumbnail: sizes?.medium_large?.source_url || sizes?.large?.source_url || image,
+    year: fields.year || "",
+    medium: fields.medium || "",
+  };
+};
+
+export const getGalleryItems = async (): Promise<GalleryItem[]> => {
+  try {
+    const res = await safeFetch(GALLERY_ENDPOINT);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      return PLACEHOLDER_GALLERY;
+    }
+    return data.map(mapGalleryItem);
+  } catch (err) {
+    console.warn("Gallery endpoint unavailable, using placeholder content.", err);
+    return PLACEHOLDER_GALLERY;
+  }
+};
+
+// --------------------------------------------------
+// News
+// Standard WordPress posts: `${WP_API}/posts?_embed`
+// Falls back to placeholder content when the request fails or is empty.
+// --------------------------------------------------
+const NEWS_ENDPOINT = `${WP_API}/posts?_embed&per_page=20&orderby=date&order=desc`;
+
+const estimateReadingTime = (html: string): number => {
+  const words = stripHtml(html).split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+};
+
+const mapNewsArticle = (item: any, index: number): NewsArticle => {
+  const featured = item._embedded?.["wp:featuredmedia"]?.[0];
+  const image =
+    featured && !featured.code
+      ? featured.source_url
+      : "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=1400&q=80&fit=crop";
+
+  const term = item._embedded?.["wp:term"]?.[0]?.[0]?.name;
+  const author = item._embedded?.author?.[0]?.name;
+  const content = item.content?.rendered || "";
+
+  return {
+    id: item.id,
+    slug: item.slug,
+    title: stripHtml(item.title?.rendered || "Untitled"),
+    excerpt: stripHtml(item.excerpt?.rendered || "").slice(0, 200),
+    content,
+    image,
+    category: term || "News",
+    author: author || "SNA Lagos",
+    date: item.date || new Date().toISOString(),
+    readingTime: estimateReadingTime(content),
+    featured: index === 0,
+  };
+};
+
+export const getNews = async (): Promise<NewsArticle[]> => {
+  try {
+    const res = await safeFetch(NEWS_ENDPOINT, NO_CACHE);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      return PLACEHOLDER_NEWS;
+    }
+    return data.map(mapNewsArticle);
+  } catch (err) {
+    console.warn("News endpoint unavailable, using placeholder content.", err);
+    return PLACEHOLDER_NEWS;
+  }
 };

@@ -1,4 +1,4 @@
-import { MapPin, Mail, Globe, Instagram, Twitter } from "lucide-react";
+import { MapPin, Mail, Globe, Instagram, Twitter, Facebook, Youtube, Linkedin } from "lucide-react";
 
 const Footer = ({ setView }: any) => {
   return (
@@ -12,7 +12,15 @@ const Footer = ({ setView }: any) => {
             </p>
             <div className="flex space-x-6">
               <a
-                href="https://instagram.com/snalagos"
+                href="https://www.facebook.com/people/SNALagosOfficial/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
+              >
+                <Facebook size={24} />
+              </a>
+              <a
+                href="https://www.instagram.com/sna_lagosofficial"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
@@ -20,7 +28,7 @@ const Footer = ({ setView }: any) => {
                 <Instagram size={24} />
               </a>
               <a
-                href="https://twitter.com/snalagos"
+                href="https://x.com/sna_lagos"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
@@ -28,13 +36,14 @@ const Footer = ({ setView }: any) => {
                 <Twitter size={24} />
               </a>
               <a
-                href="https://snalagos.ng"
+                href="https://www.youtube.com/@snalagos"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[#ffc293] hover:text-white transition-all transform hover:-translate-y-1"
               >
-                <Globe size={24} />
+                <Youtube size={24} />
               </a>
+              
             </div>
           </div>
           <div>
@@ -46,6 +55,22 @@ const Footer = ({ setView }: any) => {
                   className="hover:text-white transition-colors"
                 >
                   Artist Directory
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => setView("gallery")}
+                  className="hover:text-white transition-colors"
+                >
+                  Gallery
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => setView("news")}
+                  className="hover:text-white transition-colors"
+                >
+                  News & Stories
                 </button>
               </li>
               <li>
@@ -67,11 +92,6 @@ const Footer = ({ setView }: any) => {
               <li>
                 <button className="hover:text-white transition-colors">
                   Membership Guide
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors">
-                  Juried Exhibitions
                 </button>
               </li>
               <li>
@@ -108,7 +128,7 @@ const Footer = ({ setView }: any) => {
                   rel="noreferrer"
                   className="hover:text-white transition-colors"
                 >
-                  www.snalagos.com
+                  www.snalagos.ng
                 </a>
               </li>
             </ul>

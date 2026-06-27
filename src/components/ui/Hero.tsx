@@ -3,21 +3,44 @@ import { Award } from "lucide-react";
 export const Hero = ({ onExplore }: any) => {
   return (
     <div className="relative pt-32 pb-16 md:pt-52 md:pb-24 overflow-hidden">
+      {/* Decorative artwork wash */}
       <div className="absolute top-0 right-0 -z-10 w-full h-full md:w-1/2 opacity-20">
         <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=1200&fit=crop')] bg-cover opacity-30"></div>
       </div>
+      {/* Floating brand blobs */}
+      <div className="pointer-events-none absolute -z-10 inset-0 overflow-hidden">
+        <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-brand-300/20 blur-3xl animate-float-slow"></div>
+        <div className="absolute top-1/3 right-0 h-80 w-80 rounded-full bg-brand-500/10 blur-3xl animate-float-slower"></div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center space-x-2 bg-[#bb6e31]/10 text-[#bb6e31] px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-[#bb6e31]/20">
+          <div className="inline-flex items-center space-x-2 bg-brand-500/10 text-brand-500 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-brand-500/20 animate-in fade-in slide-in-from-bottom-2 duration-500">
             <Award size={14} />
             <span>Established 1963</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold leading-tight mb-8 font-serif">
+          <h1 className="text-6xl md:text-8xl font-bold leading-tight mb-8 font-serif animate-in fade-in slide-in-from-bottom-4 duration-700">
             Where Nigerian{" "}
-            <span className="italic text-[#bb6e31]">Mastery</span> Meets
-            Tomorrow.
+            <span className="relative inline-block italic gradient-text">
+              Mastery
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                viewBox="0 0 200 12"
+                fill="none"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 9C40 3 80 3 120 6s60 4 78 1"
+                  stroke="#bb6e31"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  opacity="0.5"
+                />
+              </svg>
+            </span>{" "}
+            Meets Tomorrow.
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-2xl">
+          <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-700">
             The Society of Nigerian Artists (SNA) is the professional body for
             all practicing Visual Artists in Nigeria. It exists to encourage and
             promote Nigerian artists and serves as a platform for them to air
@@ -36,9 +59,9 @@ export const Hero = ({ onExplore }: any) => {
           </div>
 
           {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-gray-100 pt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-gray-100 pt-12 animate-in fade-in duration-700">
             <div>
-              <p className="text-4xl font-bold text-emerald-950 font-serif mb-1">
+              <p className="text-4xl font-bold text-brand-700 font-serif mb-1">
                 500+
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
@@ -46,7 +69,7 @@ export const Hero = ({ onExplore }: any) => {
               </p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-emerald-950 font-serif mb-1">
+              <p className="text-4xl font-bold text-brand-700 font-serif mb-1">
                 60+
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
@@ -54,7 +77,7 @@ export const Hero = ({ onExplore }: any) => {
               </p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-emerald-950 font-serif mb-1">
+              <p className="text-4xl font-bold text-brand-700 font-serif mb-1">
                 12
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
@@ -62,7 +85,7 @@ export const Hero = ({ onExplore }: any) => {
               </p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-emerald-950 font-serif mb-1">
+              <p className="text-4xl font-bold text-brand-700 font-serif mb-1">
                 24/7
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400">

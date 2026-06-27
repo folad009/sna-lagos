@@ -132,6 +132,7 @@ const DirectoryView = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
       <SectionHeading
+        eyebrow="The Collective"
         title="Member Directory"
         subtitle="Discover the incredible talent that defines the Lagos art scene. From veteran masters to emerging voices."
       />
@@ -145,7 +146,7 @@ const DirectoryView = ({
           <input
             type="text"
             placeholder="Search by artist name..."
-            className="w-full pl-14 pr-4 py-5 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-800 transition shadow-sm font-medium"
+            className="w-full pl-14 pr-4 py-5 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 transition shadow-sm font-medium"
             value={search}
             onFocus={() => setShowSuggestions(true)}
             onChange={(e) => {
@@ -158,7 +159,7 @@ const DirectoryView = ({
               {suggestions.map((member) => (
                 <button
                   key={member.id}
-                  className="w-full text-left px-6 py-4 hover:bg-emerald-50 transition flex items-center space-x-4"
+                  className="w-full text-left px-6 py-4 hover:bg-brand-50 transition flex items-center space-x-4"
                   onClick={() => {
                     setSearch(member.name);
                     setShowSuggestions(false);
@@ -171,7 +172,7 @@ const DirectoryView = ({
                   />
                   <div>
                     <p className="font-bold text-gray-800">{member.name}</p>
-                    <p className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider">
+                    <p className="text-[10px] text-brand-500 font-bold uppercase tracking-wider">
                       {member.category}
                     </p>
                   </div>
@@ -200,12 +201,12 @@ const DirectoryView = ({
         {selectedCategories.map((cat) => (
           <span
             key={cat}
-            className="flex items-center bg-emerald-50 text-emerald-800 px-4 py-1.5 rounded-full text-xs font-bold border border-emerald-100"
+            className="flex items-center bg-brand-50 text-brand-600 px-4 py-1.5 rounded-full text-xs font-bold border border-brand-100"
           >
             {cat}
             <button
               onClick={() => toggleCategory(cat)}
-              className="ml-2.5 hover:text-emerald-900 transition-colors"
+              className="ml-2.5 hover:text-brand-700 transition-colors"
             >
               <X size={14} />
             </button>
@@ -255,7 +256,7 @@ const DirectoryView = ({
                     onClick={() => setCurrentPage(page as number)}
                     className={`px-4 py-2 rounded border font-bold ${
                       currentPage === page
-                        ? "bg-emerald-800 text-white"
+                        ? "bg-brand-500 text-white border-brand-500"
                         : "bg-white"
                     }`}
                     aria-label={`Go to page ${page}`}
@@ -288,7 +289,7 @@ const DirectoryView = ({
               setSearch("");
               setSelectedCategories([]);
             }}
-            className="mt-6 text-emerald-800 font-bold underline"
+            className="mt-6 text-brand-500 font-bold underline"
           >
             Reset all filters
           </button>

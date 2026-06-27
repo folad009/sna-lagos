@@ -11,10 +11,10 @@ export const CategoryMultiFilter = ({ selected, onToggle }: { selected: Category
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between min-w-[240px] px-6 py-4 bg-white border border-gray-200 rounded-2xl text-gray-700 font-bold hover:border-emerald-300 transition shadow-sm"
+        className="flex items-center justify-between min-w-[240px] px-6 py-4 bg-white border border-gray-200 rounded-2xl text-gray-700 font-bold hover:border-brand-300 transition shadow-sm"
       >
         <span className="flex items-center">
-          <Filter size={18} className="mr-3 text-emerald-800" />
+          <Filter size={18} className="mr-3 text-brand-500" />
           {selected.length === 0 ? "All Categories" : `${selected.length} Selected`}
         </span>
         <ChevronRight size={18} className={`transition-transform ${isOpen ? 'rotate-90' : ''}`} />
@@ -27,15 +27,15 @@ export const CategoryMultiFilter = ({ selected, onToggle }: { selected: Category
             {CATEGORIES.map(cat => (
               <label 
                 key={cat}
-                className="flex items-center px-4 py-3.5 hover:bg-emerald-50 cursor-pointer transition"
+                className="flex items-center px-4 py-3.5 hover:bg-brand-50 cursor-pointer transition"
               >
                 <input 
                   type="checkbox"
-                  className="w-5 h-5 rounded border-gray-300 text-emerald-800 focus:ring-emerald-800 mr-4"
+                  className="w-5 h-5 rounded border-gray-300 text-brand-500 focus:ring-brand-500 mr-4"
                   checked={selected.includes(cat)}
                   onChange={() => onToggle(cat)}
                 />
-                <span className={`text-sm font-bold ${selected.includes(cat) ? 'text-emerald-800' : 'text-gray-600'}`}>{cat}</span>
+                <span className={`text-sm font-bold ${selected.includes(cat) ? 'text-brand-500' : 'text-gray-600'}`}>{cat}</span>
               </label>
             ))}
           </div>
