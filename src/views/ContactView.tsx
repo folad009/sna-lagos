@@ -8,6 +8,10 @@ import {
   Send,
   Check,
   MessageSquare,
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
 } from "lucide-react";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { useMetaTags } from "../hooks/useMetaTags";
@@ -19,8 +23,8 @@ const ADDRESS_LINES = [
   "National Theatre, Iganmu, Lagos",
 ];
 const EMAIL = "societyofnigerianartists@gmail.com";
-const WEBSITE = "https://www.snalagos.com";
-const WEBSITE_DISPLAY = "www.snalagos.com";
+const WEBSITE = "https://www.snalagos.ng";
+const WEBSITE_DISPLAY = "www.snalagos.ng";
 const PHONES = [
   "+2348028344206",
   "+2348023921891",
@@ -29,6 +33,29 @@ const PHONES = [
 
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=National+Theatre+Iganmu+Lagos";
+
+const SOCIALS = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/people/SNALagosOfficial/",
+    Icon: Facebook,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/sna_lagosofficial",
+    Icon: Instagram,
+  },
+  {
+    label: "X (Twitter)",
+    href: "https://x.com/sna_lagos",
+    Icon: Twitter,
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@snalagos",
+    Icon: Youtube,
+  },
+];
 
 const ENQUIRY_TYPES = [
   "General enquiry",
@@ -177,6 +204,26 @@ const ContactView = () => {
                 </div>
               </li>
             </ul>
+
+            <div className="pt-2">
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#bb6e31] mb-4">
+                Follow us
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {SOCIALS.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="group flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-100 bg-[#bb6e31]/5 text-[#bb6e31] shadow-sm transition-all hover:-translate-y-1 hover:bg-[#bb6e31] hover:text-white hover:shadow-lg"
+                  >
+                    <Icon size={22} aria-hidden />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="rounded-[2.5rem] border border-gray-100 bg-gradient-to-br from-brand-50/80 to-white p-10 md:p-12 shadow-lg">
